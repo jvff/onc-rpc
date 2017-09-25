@@ -1,3 +1,7 @@
+use std::io;
+
 error_chain! {
-    foreign_links {}
+    foreign_links {
+        Io(io::Error);
+    }
 }
