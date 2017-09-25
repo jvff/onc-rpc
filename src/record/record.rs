@@ -21,6 +21,20 @@ where
     }
 }
 
+impl<T> Record<T>
+where
+    T: AsMut<[u8]> + AsRef<[u8]>,
+{
+    pub fn set_transaction_id(&mut self, transaction_id: u32) {
+        let bytes = self.data.as_mut();
+
+        bytes[0] = ((transaction_id >> 24) & 0xff) as u8;
+        bytes[1] = ((transaction_id >> 16) & 0xff) as u8;
+        bytes[2] = ((transaction_id >> 8) & 0xff) as u8;
+        bytes[3] = (transaction_id & 0xff) as u8;
+    }
+}
+
 impl<T> From<T> for Record<T>
 where
     T: AsRef<[u8]>,
