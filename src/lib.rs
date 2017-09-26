@@ -13,3 +13,4 @@ extern crate tokio_proto;
 mod errors;
 mod message;
 mod record;
+mod rpc;
