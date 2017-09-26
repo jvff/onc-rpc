@@ -1,10 +1,10 @@
-use std::io::{Read, Write};
+use std::io::Read;
 
 use bytes::{BufMut, BytesMut};
 use tokio_io::codec::{Decoder, Encoder};
 
 use super::super::errors::{Error, Result};
-use super::super::record::{Record, RecordFragments, RecordReader};
+use super::super::record::{Record, RecordFragments, RecordReader, RecordWriter};
 
 pub struct RecordCodec;
 
@@ -46,8 +46,8 @@ impl Encoder for RecordCodec {
         record: Self::Item,
         buffer: &mut BytesMut,
     ) -> Result<()> {
-        let mut writer = buffer.writer();
+        let mut writer = RecordWriter::new(buffer.writer());
 
-        Ok(writer.write_all(&record)?)
+        Ok(writer.write_record(&record)?)
     }
 }
