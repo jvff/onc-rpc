@@ -30,6 +30,10 @@ error_chain! {
             )
         }
 
+        RemoteCallDenied {
+            description("remote call request was denied by remote server")
+        }
+
         SystemError {
             description("remote program reported a system error")
         }
