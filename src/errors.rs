@@ -6,6 +6,12 @@ error_chain! {
     }
 
     errors {
+        CantConvertCallToResult {
+            description(
+                "can't convert a call request message into a call reply message"
+            )
+        }
+
         GarbageArguments {
             description("remote program replied with garbage arguments error")
         }
