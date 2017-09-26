@@ -2,9 +2,9 @@
 pub enum AcceptedStatus<T> {
     Success(T),
     ProgramUnavailable,
-    ProgramMismatch {
-        low: u32,
-        high: u32,
+    ProgramVersionMismatch {
+        min: u32,
+        max: u32,
     },
     ProcedureUnavailable,
     GarbageArguments,
