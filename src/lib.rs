@@ -17,6 +17,7 @@ mod errors;
 mod message;
 mod record;
 mod rpc;
+mod service;
 
 pub mod port_mapper;
 
