@@ -3,8 +3,6 @@ use super::mapping::Mapping;
 use super::super::procedures::ProcedureMessage;
 use super::super::super::errors::Result;
 
-#[derive(Clone, Debug, Serialize)]
-#[serde(untagged)]
 pub enum RequestResult {
     Null,
     Set(bool),
