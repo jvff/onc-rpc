@@ -1,3 +1,4 @@
+use super::super::program::PortMapperProgram;
 use super::super::requests::Request;
 use super::super::super::rpc::RpcProcedure;
 
@@ -11,16 +12,9 @@ impl<T> RpcProcedure for T
 where
     T: PortMapperProcedure
 {
+    type Program = PortMapperProgram;
     type Parameters = Request;
     type ResultData = <Self as PortMapperProcedure>::ResultData;
-
-    fn program(&self) -> u32 {
-        100_000
-    }
-
-    fn version(&self) -> u32 {
-        2
-    }
 
     fn procedure(&self) -> u32 {
         PortMapperProcedure::procedure(self)

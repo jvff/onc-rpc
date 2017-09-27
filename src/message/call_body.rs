@@ -1,5 +1,5 @@
 use super::auth_data::AuthData;
-use super::super::rpc::RpcCall;
+use super::super::rpc::{RpcCall, RpcProgram};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct CallBody<T> {
@@ -19,8 +19,8 @@ where
     fn from(rpc_call: C) -> Self {
         CallBody {
             rpc_version: 2,
-            program: rpc_call.program(),
-            version: rpc_call.version(),
+            program: <C::Program as RpcProgram>::program(),
+            version: <C::Program as RpcProgram>::version(),
             procedure: rpc_call.procedure(),
             credentials: rpc_call.credentials(),
             verifier: rpc_call.verifier(),

@@ -23,4 +23,4 @@ pub mod port_mapper;
 pub use self::errors::{Error, ErrorKind, Result};
 pub use self::message::RpcMessage;
 pub use self::record::{Record, RecordProtocol};
-pub use self::rpc::{RpcCall, RpcProcedure};
+pub use self::rpc::{RpcCall, RpcProcedure, RpcProgram};
