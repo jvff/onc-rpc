@@ -1,3 +1,4 @@
+mod mapping;
 mod protocol;
 mod request_id;
 
