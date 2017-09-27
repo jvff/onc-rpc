@@ -10,7 +10,7 @@ impl RpcProcedure for Unset {
     type Parameters = Parameters;
     type ResultData = bool;
 
-    fn procedure(&self) -> u32 {
+    fn procedure() -> u32 {
         RequestId::Unset.procedure()
     }
 }

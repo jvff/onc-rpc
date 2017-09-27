@@ -10,7 +10,7 @@ impl RpcProcedure for GetPort {
     type Parameters = Parameters;
     type ResultData = u32;
 
-    fn procedure(&self) -> u32 {
+    fn procedure() -> u32 {
         RequestId::GetPort.procedure()
     }
 }

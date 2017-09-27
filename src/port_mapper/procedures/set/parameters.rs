@@ -1,6 +1,8 @@
+use super::set::Set;
 use super::super::super::requests::Mapping;
+use super::super::super::super::rpc::RpcCall;
 
-#[derive(Deserialize, Serialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct Parameters {
     mapping: Mapping,
 }
@@ -8,5 +10,13 @@ pub struct Parameters {
 impl From<Mapping> for Parameters {
     fn from(mapping: Mapping) -> Self {
         Parameters { mapping }
+    }
+}
+
+impl RpcCall for Parameters {
+    type Procedure = Set;
+
+    fn parameters(&self) -> Parameters {
+        self.clone()
     }
 }

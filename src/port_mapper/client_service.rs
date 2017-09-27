@@ -4,9 +4,9 @@ use serde_xdr;
 use tokio_service::Service;
 
 use super::call_future::CallFuture;
+use super::procedures::ProcedureMessage;
 use super::requests::{Request, RequestId, RequestResult};
 use super::super::errors::{Error, Result};
-use super::super::message::RpcMessage;
 use super::super::record::Record;
 
 pub struct ClientService<S>
@@ -34,7 +34,7 @@ where
 {
     fn try_call(&self, request: Request) -> Result<CallFuture<S::Future>> {
         let result_hint = RequestId::from(&request);
-        let rpc_message: RpcMessage<Request> = request.into();
+        let rpc_message: ProcedureMessage = request.into();
 
         let request_record_bytes = serde_xdr::to_bytes(&rpc_message)?;
         let request_record = request_record_bytes.into();

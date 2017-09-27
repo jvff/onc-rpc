@@ -1,5 +1,5 @@
 use super::auth_data::AuthData;
-use super::super::rpc::{RpcCall, RpcProgram};
+use super::super::rpc::{RpcCall, RpcProcedure, RpcProgram};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct CallBody<T> {
@@ -12,16 +12,25 @@ pub struct CallBody<T> {
     parameters: T,
 }
 
-impl<T, C> From<C> for CallBody<T>
+impl<C, T> From<C> for CallBody<T>
 where
-    C: RpcCall<Parameters = T>,
+    C: RpcCall,
+    C::Procedure: RpcProcedure<Parameters = T>,
 {
     fn from(rpc_call: C) -> Self {
+        let program =
+            <<C::Procedure as RpcProcedure>::Program as RpcProgram>::program();
+
+        let version =
+            <<C::Procedure as RpcProcedure>::Program as RpcProgram>::version();
+
+        let procedure = <C::Procedure as RpcProcedure>::procedure();
+
         CallBody {
             rpc_version: 2,
-            program: <C::Program as RpcProgram>::program(),
-            version: <C::Program as RpcProgram>::version(),
-            procedure: rpc_call.procedure(),
+            program,
+            version,
+            procedure,
             credentials: rpc_call.credentials(),
             verifier: rpc_call.verifier(),
             parameters: rpc_call.parameters(),

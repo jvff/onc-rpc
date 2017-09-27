@@ -10,7 +10,7 @@ impl RpcProcedure for Null {
     type Parameters = Parameters;
     type ResultData = ();
 
-    fn procedure(&self) -> u32 {
+    fn procedure() -> u32 {
         RequestId::Null.procedure()
     }
 }

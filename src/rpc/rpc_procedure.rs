@@ -5,5 +5,5 @@ pub trait RpcProcedure {
     type Parameters: Sized;
     type ResultData: Sized;
 
-    fn procedure(&self) -> u32;
+    fn procedure() -> u32;
 }

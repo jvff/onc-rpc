@@ -10,7 +10,7 @@ impl RpcProcedure for CallBroadcast {
     type Parameters = Parameters;
     type ResultData = CallResult;
 
-    fn procedure(&self) -> u32 {
+    fn procedure() -> u32 {
         RequestId::CallBroadcast.procedure()
     }
 }

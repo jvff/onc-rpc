@@ -1,7 +1,7 @@
 use super::call_body::CallBody;
 use super::reply_body::ReplyBody;
 use super::super::errors::{ErrorKind, Result};
-use super::super::rpc::RpcCall;
+use super::super::rpc::{RpcCall, RpcProcedure};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum RpcBody<C, R> {
@@ -9,11 +9,12 @@ pub enum RpcBody<C, R> {
     Reply(ReplyBody<R>),
 }
 
-impl<C, R, P> From<P> for RpcBody<C, R>
+impl<C, P, R> From<C> for RpcBody<P, R>
 where
-    P: RpcCall<Parameters = C, ResultData = R>,
+    C: RpcCall,
+    C::Procedure: RpcProcedure<Parameters = P, ResultData = R>,
 {
-    fn from(rpc_call: P) -> Self {
+    fn from(rpc_call: C) -> Self {
         RpcBody::Call(rpc_call.into())
     }
 }

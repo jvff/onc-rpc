@@ -10,7 +10,7 @@ impl RpcProcedure for Dump {
     type Parameters = Parameters;
     type ResultData = Vec<Mapping>;
 
-    fn procedure(&self) -> u32 {
+    fn procedure() -> u32 {
         RequestId::Dump.procedure()
     }
 }

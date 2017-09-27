@@ -20,9 +20,10 @@ where
     body: RpcBody<P::Parameters, P::ResultData>,
 }
 
-impl<C> From<C> for RpcMessage<C>
+impl<C> From<C> for RpcMessage<C::Procedure>
 where
     C: RpcCall,
+    C::Procedure: RpcProcedure<Parameters = C>,
 {
     fn from(rpc_call: C) -> Self {
         RpcMessage {
