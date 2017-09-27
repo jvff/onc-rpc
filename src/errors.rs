@@ -1,8 +1,14 @@
 use std::io;
 
+use serde_xdr;
+
 error_chain! {
     foreign_links {
         Io(io::Error);
+    }
+
+    links {
+        XdrError(serde_xdr::Error, serde_xdr::ErrorKind);
     }
 
     errors {

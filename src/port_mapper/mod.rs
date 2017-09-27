@@ -1,3 +1,4 @@
+mod call_future;
 mod procedures;
 mod requests;
 
