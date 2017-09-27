@@ -42,6 +42,14 @@ error_chain! {
             )
         }
 
+        PortMapperConnectionError(address: String) {
+            description("failed to connect to the port mapper program")
+            display(
+                "failed to connect to the port mapper program at: {}",
+                address,
+            )
+        }
+
         RemoteCallDenied {
             description("remote call request was denied by remote server")
         }
