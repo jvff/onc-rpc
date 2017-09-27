@@ -1,13 +1,3 @@
-use super::port_mapper_procedure::PortMapperProcedure;
-use super::super::requests::RequestId;
+mod null;
 
-pub struct Null;
-
-impl PortMapperProcedure for Null {
-    type ResultData = ();
-
-    fn procedure(&self) -> u32 {
-        RequestId::Null.procedure()
-    }
-}
-
+pub use self::null::Null;

@@ -1,13 +1,3 @@
-use super::port_mapper_procedure::PortMapperProcedure;
-use super::super::requests::{CallResult, RequestId};
+mod call_broadcast;
 
-pub struct CallBroadcast;
-
-impl PortMapperProcedure for CallBroadcast {
-    type ResultData = CallResult;
-
-    fn procedure(&self) -> u32 {
-        RequestId::CallBroadcast.procedure()
-    }
-}
-
+pub use self::call_broadcast::CallBroadcast;

@@ -1,13 +1,3 @@
-use super::port_mapper_procedure::PortMapperProcedure;
-use super::super::requests::RequestId;
+mod unset;
 
-pub struct Unset;
-
-impl PortMapperProcedure for Unset {
-    type ResultData = bool;
-
-    fn procedure(&self) -> u32 {
-        RequestId::Unset.procedure()
-    }
-}
-
+pub use self::unset::Unset;
