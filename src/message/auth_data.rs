@@ -7,3 +7,12 @@ pub struct AuthData {
     flavor: AuthFlavor,
     body: OpaqueData,
 }
+
+impl Default for AuthData {
+    fn default() -> Self {
+        AuthData {
+            flavor: AuthFlavor::None,
+            body: OpaqueData::new(),
+        }
+    }
+}

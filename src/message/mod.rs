@@ -9,4 +9,5 @@ mod rejected_reply;
 mod rpc_body;
 mod rpc_message;
 
+pub use self::auth_data::AuthData;
 pub use self::rpc_message::RpcMessage;
