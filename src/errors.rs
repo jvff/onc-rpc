@@ -22,6 +22,25 @@ error_chain! {
             description("remote program replied with garbage arguments error")
         }
 
+        GetPortCallFailed {
+            description("failed to call port mapper's get_port procedure")
+        }
+
+        InvalidGetPortResponse {
+            description(
+                "failed port mapper returned an invalid response for get_port"
+            )
+        }
+
+        InvalidRemotePort(port: u32) {
+            description("invalid port number received")
+            display(
+                "invalid port number received: {} (maximum value is {})",
+                port,
+                u16::max_value(),
+            )
+        }
+
         ProcedureUnavailable {
             description("requested procedure is unavailable in remote program")
         }
