@@ -2,8 +2,8 @@ use super::call_args::CallArgs;
 use super::mapping::Mapping;
 use super::request_id::RequestId;
 use super::request_result::RequestResult;
-use super::super::procedures::PortMapperProcedure;
-use super::super::super::rpc::RpcCall;
+use super::super::program::PortMapperProgram;
+use super::super::super::rpc::{RpcCall, RpcProcedure};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(untagged)]
@@ -16,7 +16,9 @@ pub enum Request {
     CallBroadcast(CallArgs),
 }
 
-impl PortMapperProcedure for Request {
+impl RpcProcedure for Request {
+    type Program = PortMapperProgram;
+    type Parameters = Self;
     type ResultData = RequestResult;
 
     fn procedure(&self) -> u32 {
