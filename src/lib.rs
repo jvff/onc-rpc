@@ -16,4 +16,6 @@ mod message;
 mod record;
 mod rpc;
 
+pub mod port_mapper;
+
 pub use self::errors::{Error, ErrorKind, Result};
