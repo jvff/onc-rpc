@@ -6,6 +6,7 @@ mod request;
 mod request_id;
 mod request_result;
 
+pub(super) use self::call_args::CallArgs;
 pub(super) use self::call_result::CallResult;
 pub(super) use self::mapping::Mapping;
 
