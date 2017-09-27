@@ -10,6 +10,7 @@ extern crate serde_derive;
 extern crate serde_xdr;
 extern crate tokio_io;
 extern crate tokio_proto;
+extern crate tokio_service;
 
 mod errors;
 mod message;

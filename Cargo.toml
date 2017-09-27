@@ -13,3 +13,4 @@ serde_derive = "1.0"
 serde-xdr = { git = "https://github.com/jvff/serde-xdr.git" }
 tokio-io = "0.1"
 tokio-proto = { git = "https://github.com/jvff/tokio-proto.git", branch = "generic_error" }
+tokio-service ="0.1"
