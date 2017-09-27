@@ -15,3 +15,5 @@ mod errors;
 mod message;
 mod record;
 mod rpc;
+
+pub use self::errors::{Error, ErrorKind, Result};
