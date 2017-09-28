@@ -2,21 +2,6 @@ use super::get_port::GetPort;
 use super::super::super::requests::Mapping;
 use super::super::super::super::rpc::RpcCall;
 
-#[derive(Clone, Deserialize, Serialize)]
-pub struct Parameters {
-    mapping: Mapping,
-}
+type Procedure = GetPort;
 
-impl From<Mapping> for Parameters {
-    fn from(mapping: Mapping) -> Self {
-        Parameters { mapping }
-    }
-}
-
-impl RpcCall for Parameters {
-    type Procedure = GetPort;
-
-    fn parameters(&self) -> Parameters {
-        self.clone()
-    }
-}
+onc_rpc_program_procedure_parameters!(program: Mapping);

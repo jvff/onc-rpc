@@ -1,19 +1,6 @@
 use super::null::Null;
 use super::super::super::super::rpc::RpcCall;
 
-#[derive(Clone, Deserialize, Serialize)]
-pub struct Parameters;
+type Procedure = Null;
 
-impl Default for Parameters {
-    fn default() -> Self {
-        Parameters
-    }
-}
-
-impl RpcCall for Parameters {
-    type Procedure = Null;
-
-    fn parameters(&self) -> Parameters {
-        self.clone()
-    }
-}
+onc_rpc_program_procedure_parameters!();
