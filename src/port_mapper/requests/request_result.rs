@@ -1,7 +1,8 @@
 use super::call_result::CallResult;
 use super::mapping::Mapping;
 use super::super::procedures::ProcedureMessage;
-use super::super::super::errors::Result;
+use super::super::super::errors::{Error, Result};
+use super::super::super::service::TryFrom;
 
 pub enum RequestResult {
     Null,
@@ -12,8 +13,10 @@ pub enum RequestResult {
     CallBroadcast(CallResult),
 }
 
-impl RequestResult {
-    pub fn try_from(reply: ProcedureMessage) -> Result<Self> {
+impl TryFrom<ProcedureMessage> for RequestResult {
+    type Error = Error;
+
+    fn try_from(reply: ProcedureMessage) -> Result<Self> {
         match reply {
             ProcedureMessage::Null(_) => Ok(RequestResult::Null),
             ProcedureMessage::Set(message) => {

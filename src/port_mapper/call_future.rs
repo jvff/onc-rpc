@@ -7,6 +7,7 @@ use super::procedures::ProcedureMessage;
 use super::requests::{RequestId, RequestResult};
 use super::super::errors::Error;
 use super::super::record::Record;
+use super::super::service::TryFrom;
 
 pub struct CallFuture<R> {
     result_hint: RequestId,
