@@ -14,6 +14,8 @@ extern crate tokio_proto;
 extern crate tokio_service;
 
 mod errors;
+#[macro_use]
+mod macros;
 mod message;
 mod record;
 mod rpc;
