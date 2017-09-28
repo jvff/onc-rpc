@@ -3,13 +3,14 @@ use super::mapping::Mapping;
 use super::request_id::RequestId;
 use super::super::super::service::RpcRequest;
 
+#[allow(non_camel_case_types)]
 pub enum Request {
-    Null,
-    Set(Mapping),
-    Unset(Mapping),
-    GetPort(Mapping),
-    Dump,
-    CallBroadcast(CallArgs),
+    null,
+    set(Mapping),
+    unset(Mapping),
+    get_port(Mapping),
+    dump,
+    call_broadcast(CallArgs),
 }
 
 impl RpcRequest for Request {

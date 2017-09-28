@@ -43,7 +43,7 @@ impl PortMapper {
             port: 0,
         };
 
-        let request = Request::GetPort(argument);
+        let request = Request::get_port(argument);
 
         self.service.call(request).into()
     }

@@ -11,6 +11,6 @@ impl RpcProcedure for Set {
     type ResultData = bool;
 
     fn procedure() -> u32 {
-        RequestId::Set.procedure()
+        RequestId::set.procedure()
     }
 }

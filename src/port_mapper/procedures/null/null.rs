@@ -11,6 +11,6 @@ impl RpcProcedure for Null {
     type ResultData = ();
 
     fn procedure() -> u32 {
-        RequestId::Null.procedure()
+        RequestId::null.procedure()
     }
 }

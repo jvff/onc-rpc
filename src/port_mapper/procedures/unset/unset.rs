@@ -11,6 +11,6 @@ impl RpcProcedure for Unset {
     type ResultData = bool;
 
     fn procedure() -> u32 {
-        RequestId::Unset.procedure()
+        RequestId::unset.procedure()
     }
 }

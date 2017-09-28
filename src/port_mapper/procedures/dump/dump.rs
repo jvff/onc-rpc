@@ -11,6 +11,6 @@ impl RpcProcedure for Dump {
     type ResultData = Vec<Mapping>;
 
     fn procedure() -> u32 {
-        RequestId::Dump.procedure()
+        RequestId::dump.procedure()
     }
 }

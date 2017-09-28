@@ -30,24 +30,24 @@ pub enum ProcedureMessage {
 impl From<Request> for ProcedureMessage {
     fn from(request: Request) -> Self {
         match request {
-            Request::Null => {
+            Request::null => {
                 ProcedureMessage::Null(null::Parameters::default().into())
             }
-            Request::Set(mapping) => {
+            Request::set(mapping) => {
                 ProcedureMessage::Set(set::Parameters::from(mapping).into())
             }
-            Request::Unset(mapping) => {
+            Request::unset(mapping) => {
                 ProcedureMessage::Unset(unset::Parameters::from(mapping).into())
             }
-            Request::GetPort(mapping) => {
+            Request::get_port(mapping) => {
                 let parameters = get_port::Parameters::from(mapping);
 
                 ProcedureMessage::GetPort(parameters.into())
             }
-            Request::Dump => {
+            Request::dump => {
                 ProcedureMessage::Dump(dump::Parameters::default().into())
             }
-            Request::CallBroadcast(call_args) => {
+            Request::call_broadcast(call_args) => {
                 let parameters = call_broadcast::Parameters::from(call_args);
 
                 ProcedureMessage::CallBroadcast(parameters.into())
@@ -101,22 +101,22 @@ impl DeserializeWithHint<RequestId> for ProcedureMessage {
         D: Deserializer<'de>,
     {
         match hint {
-            RequestId::Null => {
+            RequestId::null => {
                 Ok(RpcMessage::<Null>::deserialize(deserializer)?.into())
             },
-            RequestId::Set => {
+            RequestId::set => {
                 Ok(RpcMessage::<Set>::deserialize(deserializer)?.into())
             }
-            RequestId::Unset => {
+            RequestId::unset => {
                 Ok(RpcMessage::<Unset>::deserialize(deserializer)?.into())
             }
-            RequestId::GetPort => {
+            RequestId::get_port => {
                 Ok(RpcMessage::<GetPort>::deserialize(deserializer)?.into())
             }
-            RequestId::Dump => {
+            RequestId::dump => {
                 Ok(RpcMessage::<Dump>::deserialize(deserializer)?.into())
             }
-            RequestId::CallBroadcast => {
+            RequestId::call_broadcast => {
                 Ok(
                     RpcMessage::<CallBroadcast>::deserialize(deserializer)?
                         .into()
