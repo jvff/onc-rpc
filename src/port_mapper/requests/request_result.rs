@@ -18,20 +18,20 @@ impl TryFrom<ProcedureMessage> for RequestResult {
 
     fn try_from(reply: ProcedureMessage) -> Result<Self> {
         match reply {
-            ProcedureMessage::Null(_) => Ok(RequestResult::Null),
-            ProcedureMessage::Set(message) => {
+            ProcedureMessage::null(_) => Ok(RequestResult::Null),
+            ProcedureMessage::set(message) => {
                 Ok(RequestResult::Set(message.into_reply()?))
             }
-            ProcedureMessage::Unset(message) => {
+            ProcedureMessage::unset(message) => {
                 Ok(RequestResult::Unset(message.into_reply()?))
             }
-            ProcedureMessage::GetPort(message) => {
+            ProcedureMessage::get_port(message) => {
                 Ok(RequestResult::GetPort(message.into_reply()?))
             }
-            ProcedureMessage::Dump(message) => {
+            ProcedureMessage::dump(message) => {
                 Ok(RequestResult::Dump(message.into_reply()?))
             }
-            ProcedureMessage::CallBroadcast(message) => {
+            ProcedureMessage::call_broadcast(message) => {
                 Ok(RequestResult::CallBroadcast(message.into_reply()?))
             }
         }

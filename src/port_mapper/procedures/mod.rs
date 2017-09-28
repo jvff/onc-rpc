@@ -1,10 +1,14 @@
-mod procedure_message;
+use super::program::PortMapperProgram as Program;
+use super::requests::request;
+use super::requests::{CallArgs, CallResult, Mapping};
 
-mod null;
-mod set;
-mod unset;
-mod get_port;
-mod dump;
-mod call_broadcast;
+onc_rpc_program_procedures! {
+    null(),
+    set(program: Mapping) -> bool,
+    unset(program: Mapping) -> bool,
+    get_port(program: Mapping) -> u32,
+    dump() -> Vec<Mapping>,
+    call_broadcast(arguments: CallArgs) -> CallResult,
+}
 
-pub use self::procedure_message::ProcedureMessage;
+pub use self::procedures::ProcedureMessage;
