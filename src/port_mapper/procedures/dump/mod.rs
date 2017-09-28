@@ -6,5 +6,4 @@ type Program = PortMapperProgram;
 
 onc_rpc_program_procedure!(dump() -> Vec<Mapping>);
 
-pub use self::dump::Parameters;
-pub use self::dump::Procedure as Dump;
+pub use self::dump::{Parameters, Procedure};

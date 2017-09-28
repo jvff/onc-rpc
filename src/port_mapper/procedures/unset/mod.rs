@@ -6,5 +6,4 @@ type Program = PortMapperProgram;
 
 onc_rpc_program_procedure!(unset(program: Mapping) -> bool);
 
-pub use self::unset::Parameters;
-pub use self::unset::Procedure as Unset;
+pub use self::unset::{Parameters, Procedure};

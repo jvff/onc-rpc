@@ -6,5 +6,4 @@ type Program = PortMapperProgram;
 
 onc_rpc_program_procedure!(get_port(program: Mapping) -> u32);
 
-pub use self::get_port::Parameters;
-pub use self::get_port::Procedure as GetPort;
+pub use self::get_port::{Parameters, Procedure};

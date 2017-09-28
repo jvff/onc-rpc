@@ -6,5 +6,4 @@ type Program = PortMapperProgram;
 
 onc_rpc_program_procedure!(set(program: Mapping) -> bool);
 
-pub use self::set::Parameters;
-pub use self::set::Procedure as Set;
+pub use self::set::{Parameters, Procedure};

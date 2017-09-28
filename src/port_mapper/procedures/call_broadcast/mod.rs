@@ -6,5 +6,4 @@ type Program = PortMapperProgram;
 
 onc_rpc_program_procedure!(call_broadcast(arguments: CallArgs) -> CallResult);
 
-pub use self::call_broadcast::Parameters;
-pub use self::call_broadcast::Procedure as CallBroadcast;
+pub use self::call_broadcast::{Parameters, Procedure};
