@@ -1,7 +1,9 @@
-mod null;
+use super::super::program::PortMapperProgram;
+use super::super::requests::request;
 
-mod parameters;
+type Program = PortMapperProgram;
 
-pub use self::null::Null;
+onc_rpc_program_procedure!(null());
 
-pub use self::parameters::Parameters;
+pub use self::null::Parameters;
+pub use self::null::Procedure as Null;

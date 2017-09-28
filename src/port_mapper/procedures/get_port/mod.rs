@@ -1,7 +1,10 @@
-mod get_port;
+use super::super::program::PortMapperProgram;
+use super::super::requests::request;
+use super::super::requests::Mapping;
 
-mod parameters;
+type Program = PortMapperProgram;
 
-pub use self::get_port::GetPort;
+onc_rpc_program_procedure!(get_port(program: Mapping) -> u32);
 
-pub use self::parameters::Parameters;
+pub use self::get_port::Parameters;
+pub use self::get_port::Procedure as GetPort;

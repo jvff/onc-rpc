@@ -2,8 +2,9 @@ mod call_args;
 mod call_result;
 mod mapping;
 mod protocol;
-mod request;
 mod request_result;
+
+pub mod request;
 
 pub(super) use self::call_args::CallArgs;
 pub(super) use self::call_result::CallResult;

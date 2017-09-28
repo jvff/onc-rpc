@@ -1,7 +1,10 @@
-mod dump;
+use super::super::program::PortMapperProgram;
+use super::super::requests::request;
+use super::super::requests::Mapping;
 
-mod parameters;
+type Program = PortMapperProgram;
 
-pub use self::dump::Dump;
+onc_rpc_program_procedure!(dump() -> Vec<Mapping>);
 
-pub use self::parameters::Parameters;
+pub use self::dump::Parameters;
+pub use self::dump::Procedure as Dump;

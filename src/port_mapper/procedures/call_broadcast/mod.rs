@@ -1,7 +1,10 @@
-mod call_broadcast;
+use super::super::program::PortMapperProgram;
+use super::super::requests::request;
+use super::super::requests::{CallArgs, CallResult};
 
-mod parameters;
+type Program = PortMapperProgram;
 
-pub use self::call_broadcast::CallBroadcast;
+onc_rpc_program_procedure!(call_broadcast(arguments: CallArgs) -> CallResult);
 
-pub use self::parameters::Parameters;
+pub use self::call_broadcast::Parameters;
+pub use self::call_broadcast::Procedure as CallBroadcast;
