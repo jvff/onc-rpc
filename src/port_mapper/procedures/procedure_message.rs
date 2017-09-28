@@ -14,6 +14,7 @@ use super::unset;
 use super::unset::Unset;
 use super::super::requests::{Request, RequestId};
 use super::super::super::message::RpcMessage;
+use super::super::super::service::DeserializeWithHint;
 
 #[derive(Deserialize, Serialize)]
 #[serde(untagged)]
@@ -91,8 +92,8 @@ impl From<RpcMessage<CallBroadcast>> for ProcedureMessage {
     }
 }
 
-impl ProcedureMessage {
-    pub fn deserialize_with_hint<'de, D>(
+impl DeserializeWithHint<RequestId> for ProcedureMessage {
+    fn deserialize_with_hint<'de, D>(
         hint: RequestId,
         deserializer: D,
     ) -> Result<Self, D::Error>
