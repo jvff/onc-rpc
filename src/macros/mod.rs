@@ -5,3 +5,4 @@
 #[macro_use] mod procedures_macro;
 #[macro_use] mod request_macro;
 #[macro_use] mod request_id_macro;
+#[macro_use] mod response_macro;
