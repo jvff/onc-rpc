@@ -31,7 +31,7 @@ where
             self.result.poll().chain_err(|| ErrorKind::GetPortCallFailed);
 
         match try_ready!(poll_result) {
-            RequestResult::GetPort(port) => {
+            RequestResult::get_port(port) => {
                 ensure!(
                     port < u16::max_value() as u32,
                     ErrorKind::InvalidRemotePort(port)
