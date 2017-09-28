@@ -1,3 +1,4 @@
+#[macro_use] mod connect_macro;
 #[macro_use] mod parameters_macro;
 #[macro_use] mod procedure_macro;
 #[macro_use] mod procedure_message_macro;
