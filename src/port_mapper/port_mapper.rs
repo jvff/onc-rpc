@@ -7,7 +7,7 @@ use tokio_proto::multiplex;
 use tokio_service::Service;
 
 use super::get_port_result::GetPortResult;
-use super::port_mapper_connect::PortMapperConnect;
+use super::port_mapper_connect::Connect;
 use super::requests::{Mapping, Protocol, Request};
 use super::service::PortMapperService;
 use super::super::errors::Error;
@@ -26,8 +26,8 @@ impl PortMapper {
     pub fn connect<'a>(
         address: &'a SocketAddr,
         handle: &Handle,
-    ) -> PortMapperConnect<'a> {
-        PortMapperConnect::connect(address, handle)
+    ) -> Connect<'a> {
+        Connect::new(address, handle)
     }
 
     pub fn get_port(

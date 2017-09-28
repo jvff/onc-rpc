@@ -61,14 +61,6 @@ error_chain! {
             )
         }
 
-        PortMapperConnectionError(address: String) {
-            description("failed to connect to the port mapper program")
-            display(
-                "failed to connect to the port mapper program at: {}",
-                address,
-            )
-        }
-
         ProgramConnectionError(program: String, address: String) {
             description("failed to connect to program")
             display(

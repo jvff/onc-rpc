@@ -8,5 +8,5 @@ mod service;
 
 pub use self::get_port_result::GetPortResult;
 pub use self::port_mapper::PortMapper;
-pub use self::port_mapper_connect::PortMapperConnect;
+pub use self::port_mapper_connect::Connect;
 pub use self::requests::Protocol;
