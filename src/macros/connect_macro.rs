@@ -13,23 +13,23 @@ macro_rules! onc_rpc_program_connect {
 
             use $crate::{Error, ErrorKind, RecordProtocol, ResultExt};
 
-            pub struct Connect<'a> {
-                address: &'a SocketAddr,
+            pub struct Connect {
+                address: SocketAddr,
                 connect: TcpConnect<Multiplex, RecordProtocol>,
             }
 
-            impl<'a> Connect<'a> {
-                pub fn new(address: &'a SocketAddr, handle: &Handle) -> Self {
+            impl Connect {
+                pub fn new(address: SocketAddr, handle: &Handle) -> Self {
                     let client = TcpClient::new(RecordProtocol);
 
                     Connect {
                         address,
-                        connect: client.connect(address, handle),
+                        connect: client.connect(&address, handle),
                     }
                 }
             }
 
-            impl<'a> Future for Connect<'a> {
+            impl Future for Connect {
                 type Item = $program;
                 type Error = Error;
 

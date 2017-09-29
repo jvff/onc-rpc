@@ -92,10 +92,10 @@ macro_rules! onc_rpc_program {
             }
 
             impl $name {
-                pub fn connect<'a>(
-                    address: &'a SocketAddr,
+                pub fn connect(
+                    address: SocketAddr,
                     handle: &Handle,
-                ) -> Connect<'a> {
+                ) -> Connect {
                     Connect::new(address, handle)
                 }
 
