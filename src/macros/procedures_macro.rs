@@ -3,7 +3,7 @@ macro_rules! onc_rpc_program_procedures {
         $( $procedure:ident $parameters:tt $( -> $result_type:ty )* ),*
         $(,)*
     ) => {
-        mod procedures {
+        pub mod procedures {
             use serde::{Deserialize, Deserializer};
 
             use $crate::{DeserializeWithHint, RpcMessage};
