@@ -115,8 +115,6 @@ macro_rules! onc_rpc_program {
             }
         }
 
-        pub use self::$module::$name;
-
         $(
             $(
                 pub use self::$module::procedures::$procedure::ResponseResult
