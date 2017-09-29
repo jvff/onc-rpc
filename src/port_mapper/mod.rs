@@ -10,4 +10,4 @@ pub use self::call_result::CallResult;
 pub use self::mapping::Mapping;
 pub use self::protocol::Protocol;
 
-pub use self::port_mapper::{GetPortResult, PortMapper};
+pub use self::port_mapper::{GetPortResult, PortMapper, PortMapperConnect};

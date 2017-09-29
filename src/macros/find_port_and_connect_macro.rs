@@ -8,15 +8,15 @@ macro_rules! onc_rpc_program_find_port_and_connect {
             use futures::{Async, Future, Poll};
             use tokio_core::reactor::Handle;
 
-            use $crate::port_mapper::port_mapper;
-            use $crate::port_mapper::{GetPortResult, Mapping, PortMapper};
+            use $crate::port_mapper::{GetPortResult, Mapping, PortMapper,
+                                      PortMapperConnect};
             use $crate::{Error, ErrorKind};
 
             use super::{Connect, $program as Program};
 
             enum PortMapperStatus {
                 Waiting,
-                Connecting(port_mapper::Connect),
+                Connecting(PortMapperConnect),
                 Connected(PortMapper),
             }
 

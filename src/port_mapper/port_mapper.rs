@@ -6,7 +6,7 @@ onc_rpc! {
     program(port_mapper::PortMapper) {
         id = 100_000;
         version = 2;
-        connect = Connect;
+        connect = PortMapperConnect;
 
         procedures {
             0 => null(),
