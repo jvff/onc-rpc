@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_procedures {
     (
         $( $procedure:ident $parameters:tt $( -> $result_type:ty )* ),*

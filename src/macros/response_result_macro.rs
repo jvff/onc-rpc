@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_procedure_response_result {
     (
         @processed $procedure:ident -> $result:ty

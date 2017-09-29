@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program {
     (
         $module:ident,
@@ -124,6 +125,7 @@ macro_rules! onc_rpc_program {
     };
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_method {
     ( $procedure:ident () ) => {
         onc_rpc_program_method!($procedure() -> ());

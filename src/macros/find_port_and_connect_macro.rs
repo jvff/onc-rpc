@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_find_port_and_connect {
     ( $program:ident, $id:expr, $version:expr ) => {
         mod find_port_and_connect {

@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_procedure_parameters {
     ( $(,)* ) => {
         #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -43,6 +44,7 @@ macro_rules! onc_rpc_program_procedure_parameters {
     };
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_procedure_parameters_rpc_call {
     () => {
         impl RpcCall for Parameters {

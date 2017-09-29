@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_procedure_message {
     ( $( $procedure:ident $parameters:tt ),* $(,)* ) => {
         #[allow(non_camel_case_types)]
@@ -42,6 +43,7 @@ macro_rules! onc_rpc_program_procedure_message {
     }
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_procedure_message_from_request {
     (
         @end_marker

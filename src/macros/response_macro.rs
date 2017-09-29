@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_response {
     (
         $( $procedure:ident $( -> $result_type:ty )*),*
@@ -25,6 +26,7 @@ macro_rules! onc_rpc_program_response {
     };
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_response_conversion {
     (
         ; end_marker ;

@@ -33,6 +33,7 @@ macro_rules! onc_rpc_program_request {
     };
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_request_enum {
     (
         ; end_marker ;

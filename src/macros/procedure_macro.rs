@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! onc_rpc_program_procedure {
     ( @processed $procedure:ident $parameters:tt -> $result_data:ty) => {
         use futures::{Async, Future, Poll};

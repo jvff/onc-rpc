@@ -17,6 +17,7 @@ macro_rules! onc_rpc_program_request_id {
     }
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_request_id_enum {
     (
         $(
@@ -41,6 +42,7 @@ macro_rules! onc_rpc_program_request_id_enum {
     }
 }
 
+#[macro_export]
 macro_rules! onc_rpc_program_request_id_from {
     ( ; end_marker ; $( $request:pat => $id:expr ),* $(,)* ) => {
         impl<'r> From<&'r Request> for RequestId {
