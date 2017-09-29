@@ -18,8 +18,7 @@ onc_rpc! {
     }
 }
 
-pub use self::port_mapper::{CallResponse, Connect, Program, Request, Response,
-                            ServiceConfig};
+pub use self::port_mapper::Connect;
 
 pub use self::port_mapper::procedures::get_port::
     ResponseResult as GetPortResult;
