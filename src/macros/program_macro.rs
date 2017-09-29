@@ -14,7 +14,7 @@ macro_rules! onc_rpc_program {
         $(,)*
     ) => {
         pub mod $module {
-            use std::net::SocketAddr;
+            use std::net::{IpAddr, SocketAddr};
 
             use futures::future::{Flatten, FutureResult};
             use tokio_core::net::TcpStream;
@@ -51,6 +51,7 @@ macro_rules! onc_rpc_program {
             }
 
             onc_rpc_program_connect!($name);
+            onc_rpc_program_find_port_and_connect!($name, $id, $version);
 
             onc_rpc_program_request! {
                 $(
@@ -92,7 +93,13 @@ macro_rules! onc_rpc_program {
             }
 
             impl $name {
-                pub fn connect(
+                pub fn connect(address: IpAddr, handle: &Handle)
+                    -> FindPortAndConnect
+                {
+                    FindPortAndConnect::new(address, handle)
+                }
+
+                pub fn connect_to_known_port(
                     address: SocketAddr,
                     handle: &Handle,
                 ) -> Connect {
