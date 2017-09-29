@@ -22,16 +22,6 @@ error_chain! {
             description("remote program replied with garbage arguments error")
         }
 
-        GetPortCallFailed {
-            description("failed to call port mapper's get_port procedure")
-        }
-
-        InvalidGetPortResponse {
-            description(
-                "failed port mapper returned an invalid response for get_port"
-            )
-        }
-
         InvalidProcedureResponse(procedure: String) {
             description("received an invalid response from a procedure call")
             display(

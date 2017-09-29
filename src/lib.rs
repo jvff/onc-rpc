@@ -1,5 +1,3 @@
-#![recursion_limit="128"]
-
 extern crate byteorder;
 extern crate bytes;
 #[macro_use]
