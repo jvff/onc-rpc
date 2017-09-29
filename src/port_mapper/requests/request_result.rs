@@ -11,4 +11,4 @@ onc_rpc_program_response! {
     call_broadcast -> CallResult,
 }
 
-pub use self::response::Response as RequestResult;
+pub use self::response::Response;

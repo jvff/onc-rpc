@@ -14,9 +14,11 @@ use super::super::errors::Error;
 use super::super::record::RecordProtocol;
 use super::super::service::{CallFuture, RpcService};
 
-type CallResultFuture = Flatten<FutureResult<CallFuture<RecordFuture, PortMapperService>, Error>>;
 type RecordFuture = multiplex::ClientFuture<TcpStream, RecordProtocol>;
 type RecordService = multiplex::ClientService<TcpStream, RecordProtocol>;
+
+pub type CallResponse =
+    Flatten<FutureResult<CallFuture<RecordFuture, PortMapperService>, Error>>;
 
 pub struct PortMapper {
     service: RpcService<RecordService, PortMapperService>,
@@ -35,7 +37,7 @@ impl PortMapper {
         program: u32,
         version: u32,
         protocol: Protocol,
-    ) -> GetPortResult<CallResultFuture> {
+    ) -> GetPortResult<CallResponse> {
         let argument = Mapping {
             program,
             version,

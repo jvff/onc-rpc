@@ -32,6 +32,14 @@ error_chain! {
             )
         }
 
+        InvalidProcedureResponse(procedure: String) {
+            description("received an invalid response from a procedure call")
+            display(
+                "received an invalid response from procedure: {}",
+                procedure,
+            )
+        }
+
         InvalidRemotePort(port: u32) {
             description("invalid port number received")
             display(
@@ -39,6 +47,11 @@ error_chain! {
                 port,
                 u16::max_value(),
             )
+        }
+
+        ProcedureCallError(procedure: String) {
+            description("failed to call procedure")
+            display("failed to call procedure: {}", procedure)
         }
 
         ProcedureUnavailable {

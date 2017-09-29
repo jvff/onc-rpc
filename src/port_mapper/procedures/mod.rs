@@ -1,6 +1,7 @@
+use super::port_mapper::CallResponse;
 use super::program::PortMapperProgram as Program;
 use super::requests::request;
-use super::requests::{CallArgs, CallResult, Mapping};
+use super::requests::{CallArgs, CallResult, Mapping, Response};
 
 onc_rpc_program_procedures! {
     null(),

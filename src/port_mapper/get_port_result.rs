@@ -1,18 +1,18 @@
 use futures::{Async, Future, Poll};
 
-use super::requests::RequestResult;
+use super::requests::Response;
 use super::super::errors::{Error, ErrorKind, ResultExt};
 
 pub struct GetPortResult<F>
 where
-    F: Future<Item = RequestResult, Error = Error>,
+    F: Future<Item = Response, Error = Error>,
 {
     result: F,
 }
 
 impl<F> From<F> for GetPortResult<F>
 where
-    F: Future<Item = RequestResult, Error = Error>,
+    F: Future<Item = Response, Error = Error>,
 {
     fn from(result: F) -> Self {
         GetPortResult { result }
@@ -21,7 +21,7 @@ where
 
 impl<F> Future for GetPortResult<F>
 where
-    F: Future<Item = RequestResult, Error = Error>,
+    F: Future<Item = Response, Error = Error>,
 {
     type Item = u16;
     type Error = Error;
@@ -31,7 +31,7 @@ where
             self.result.poll().chain_err(|| ErrorKind::GetPortCallFailed);
 
         match try_ready!(poll_result) {
-            RequestResult::get_port(port) => {
+            Response::get_port(port) => {
                 ensure!(
                     port < u16::max_value() as u32,
                     ErrorKind::InvalidRemotePort(port)

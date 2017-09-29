@@ -12,4 +12,4 @@ pub(super) use self::mapping::Mapping;
 
 pub use self::protocol::Protocol;
 pub use self::request::{Request, RequestId};
-pub use self::request_result::RequestResult;
+pub use self::request_result::Response;
