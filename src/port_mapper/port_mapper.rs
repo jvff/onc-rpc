@@ -1,60 +1,19 @@
-use std::net::SocketAddr;
+use super::requests::{CallArgs, CallResult, Mapping};
 
-use futures::future::{Flatten, FutureResult};
-use tokio_core::net::TcpStream;
-use tokio_core::reactor::Handle;
-use tokio_proto::multiplex;
-use tokio_service::Service;
-
-use super::get_port_result::GetPortResult;
-use super::port_mapper_connect::Connect;
-use super::requests::{Mapping, Protocol, Request};
-use super::service::PortMapperService;
-use super::super::errors::Error;
-use super::super::record::RecordProtocol;
-use super::super::service::{CallFuture, RpcService};
-
-type RecordFuture = multiplex::ClientFuture<TcpStream, RecordProtocol>;
-type RecordService = multiplex::ClientService<TcpStream, RecordProtocol>;
-
-pub type CallResponse =
-    Flatten<FutureResult<CallFuture<RecordFuture, PortMapperService>, Error>>;
-
-pub struct PortMapper {
-    service: RpcService<RecordService, PortMapperService>,
-}
-
-impl PortMapper {
-    pub fn connect<'a>(
-        address: &'a SocketAddr,
-        handle: &Handle,
-    ) -> Connect<'a> {
-        Connect::new(address, handle)
-    }
-
-    pub fn get_port(
-        &self,
-        program: u32,
-        version: u32,
-        protocol: Protocol,
-    ) -> GetPortResult<CallResponse> {
-        let argument = Mapping {
-            program,
-            version,
-            protocol,
-            port: 0,
-        };
-
-        let request = Request::get_port(argument);
-
-        self.service.call(request).into()
+onc_rpc_program! {
+    port_mapper,
+    PortMapper,
+    100_000,
+    2,
+    {
+        0 => null(),
+        1 => set(program: Mapping) -> bool,
+        2 => unset(program: Mapping) -> bool,
+        3 => get_port(program: Mapping) -> u32,
+        4 => dump() -> Vec<Mapping>,
+        5 => call_broadcast(arguments: CallArgs) -> CallResult,
     }
 }
 
-impl From<RecordService> for PortMapper {
-    fn from(record_service: RecordService) -> Self {
-        PortMapper {
-            service: RpcService::from(record_service),
-        }
-    }
-}
+pub use self::port_mapper::{CallResponse, Connect, PortMapper, Program, Request,
+                            Response, ServiceConfig};
