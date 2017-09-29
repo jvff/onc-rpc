@@ -1,4 +1,6 @@
-use super::requests::{CallArgs, CallResult, Mapping};
+use super::call_args::CallArgs;
+use super::call_result::CallResult;
+use super::mapping::Mapping;
 
 onc_rpc! {
     program(port_mapper::PortMapper) {
