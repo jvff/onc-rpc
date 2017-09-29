@@ -8,6 +8,7 @@ macro_rules! onc_rpc_program {
             $(
                 $procedure_id:expr => $procedure:ident $parameters:tt
                     $( -> $result_type:ty )*
+                    $( => $result_future_alias:ident )*
             ),*
             $(,)*
         }
@@ -113,6 +114,15 @@ macro_rules! onc_rpc_program {
                 )*
             }
         }
+
+        pub use self::$module::$name;
+
+        $(
+            $(
+                pub use self::$module::procedures::$procedure::ResponseResult
+                    as $result_future_alias;
+            )*
+        )*
     };
 }
 
