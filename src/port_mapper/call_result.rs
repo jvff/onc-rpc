@@ -1,7 +1,7 @@
-use serde_xdr::OpaqueData;
+use serde_xdr::VariableLengthOpaqueData;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct CallResult {
     port: u32,
-    result: OpaqueData,
+    result: VariableLengthOpaqueData,
 }
