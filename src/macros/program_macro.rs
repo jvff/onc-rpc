@@ -24,7 +24,7 @@ macro_rules! onc_rpc_program {
             use tokio_proto::multiplex::{ClientFuture, ClientService};
             use tokio_service::Service;
 
-            use $crate::{CallFuture, Error, RecordProtocol, RpcProgram,
+            use $crate::{CallFuture, Connect, Error, RecordProtocol, RpcProgram,
                          RpcServiceConfig, RpcService};
 
             use super::*;
@@ -52,7 +52,6 @@ macro_rules! onc_rpc_program {
                 }
             }
 
-            onc_rpc_program_connect!($name);
             onc_rpc_program_find_port_and_connect!($name, $id, $version);
 
             onc_rpc_program_request! {
@@ -104,7 +103,7 @@ macro_rules! onc_rpc_program {
                 pub fn connect_to_known_port(
                     address: SocketAddr,
                     handle: &Handle,
-                ) -> Connect {
+                ) -> Connect<Self> {
                     Connect::new(address, handle)
                 }
 

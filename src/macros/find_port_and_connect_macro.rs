@@ -28,7 +28,7 @@ macro_rules! onc_rpc_program_find_port_and_connect {
 
             enum ConnectStatus {
                 Waiting,
-                Connecting(Connect)
+                Connecting(Connect<$program>)
             }
 
             pub struct FindPortAndConnect {

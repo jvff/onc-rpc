@@ -27,5 +27,5 @@ pub use self::errors::{Error, ErrorKind, Result, ResultExt};
 pub use self::message::RpcMessage;
 pub use self::record::{Record, RecordProtocol};
 pub use self::rpc::{RpcCall, RpcProcedure, RpcProgram};
-pub use self::service::{CallFuture, DeserializeWithHint, RpcRequest, RpcService,
-                        RpcServiceConfig, TryFrom};
+pub use self::service::{CallFuture, Connect, DeserializeWithHint, RpcRequest,
+                        RpcService, RpcServiceConfig, TryFrom};

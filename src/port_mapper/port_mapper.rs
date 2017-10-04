@@ -1,6 +1,7 @@
 use super::call_args::CallArgs;
 use super::call_result::CallResult;
 use super::mapping::Mapping;
+use super::super::service::Connect;
 
 onc_rpc! {
     program(port_mapper::PortMapper) {
@@ -19,4 +20,4 @@ onc_rpc! {
     }
 }
 
-pub use self::port_mapper::Connect as PortMapperConnect;
+pub type PortMapperConnect = Connect<PortMapper>;

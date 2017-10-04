@@ -64,13 +64,9 @@ error_chain! {
             )
         }
 
-        ProgramConnectionError(program: String, address: String) {
+        ProgramConnectionError(address: String) {
             description("failed to connect to program")
-            display(
-                "failed to connect to the {} program at: {}",
-                program,
-                address,
-            )
+            display("failed to connect to program at: {}", address)
         }
 
         RemoteCallDenied {
