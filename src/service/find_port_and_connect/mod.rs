@@ -6,17 +6,11 @@ use tokio_core::net::TcpStream;
 use tokio_core::reactor::Handle;
 use tokio_proto::multiplex::ClientService;
 
+use self::port_mapper_status::PortMapperStatus;
 use super::connect::Connect;
 use super::super::errors::{Error, ErrorKind};
-use super::super::port_mapper::{GetPortResult, Mapping, PortMapper,
-                                PortMapperConnect};
+use super::super::port_mapper::{GetPortResult, Mapping, PortMapper};
 use super::super::record::RecordProtocol;
-
-enum PortMapperStatus {
-    Waiting,
-    Connecting(PortMapperConnect),
-    Connected(PortMapper),
-}
 
 enum PortStatus {
     Waiting,
@@ -151,8 +145,7 @@ fn poll_port_status(
 
     let (poll_result, new_status) = match moved_port_status {
         PortStatus::Waiting => {
-            let port_mapper_poll_result =
-                poll_port_mapper_status(port_mapper_status);
+            let port_mapper_poll_result = port_mapper_status.poll();
 
             match port_mapper_poll_result {
                 Ok(Async::Ready(())) => {
@@ -237,52 +230,4 @@ fn poll_port_status(
     }
 }
 
-fn poll_port_mapper_status(
-    port_mapper_status: &mut PortMapperStatus,
-) -> Poll<(), Error> {
-    let moved_port_mapper_status =
-        mem::replace(port_mapper_status, PortMapperStatus::Waiting);
-
-    let (poll_result, new_status) = match moved_port_mapper_status {
-        PortMapperStatus::Waiting => {
-            unreachable!("connection to PortMapper has already started");
-        }
-        PortMapperStatus::Connecting(mut connect) => {
-            let connect_poll_result = connect.poll();
-
-            match connect_poll_result {
-                Ok(Async::Ready(port_mapper)) => {
-                    let new_status = PortMapperStatus::Connected(port_mapper);
-
-                    (None, new_status)
-                }
-                Ok(Async::NotReady) => {
-                    let poll_result = Ok(Async::NotReady);
-                    let new_status = PortMapperStatus::Connecting(connect);
-
-                    (Some(poll_result), new_status)
-                }
-                Err(error) => {
-                    let poll_result = Err(error);
-                    let new_status = PortMapperStatus::Connecting(connect);
-
-                    (Some(poll_result), new_status)
-                }
-            }
-        }
-        PortMapperStatus::Connected(port_mapper) => {
-            let poll_result = Ok(Async::Ready(()));
-            let new_status = PortMapperStatus::Connected(port_mapper);
-
-            (Some(poll_result), new_status)
-        }
-    };
-
-    mem::replace(port_mapper_status, new_status);
-
-    if let Some(poll_result) = poll_result {
-        poll_result
-    } else {
-        poll_port_mapper_status(port_mapper_status)
-    }
-}
+mod port_mapper_status;
