@@ -1,12 +1,6 @@
 #[macro_export]
 macro_rules! onc_rpc_program_request {
-    (
-        $(
-            $id:expr => $procedure:ident $parameters:tt
-               $( -> $return_type:ty )*
-        ),*
-        $(,)*
-    ) => {
+    ( $( $id:expr => $procedure:ident $parameters:tt ),* $(,)* ) => {
         mod request {
             use $crate::RpcRequest;
 
@@ -53,25 +47,18 @@ macro_rules! onc_rpc_program_request_enum {
     (
         $(
             $id:expr => $procedure:ident ( $( $name:ident: $type:ty ),* $(,)* )
-                $( -> $return_type:ty )*
         ),*
         $(,)*
     ) => {
         onc_rpc_program_request_enum! {
-            $(
-                $id => $procedure ( $( $name: $type ),* )
-                    $( -> $return_type )*
-            ),*
+            $( $id => $procedure ( $( $name: $type ),* ) ),*
             ; end_marker ;
         }
     };
 
     (
-        $id:expr => $procedure:ident () $( -> $return_type:ty )*
-        $(
-            , $next_id:expr => $next_procedure:ident $next_parameters:tt
-                $( -> $next_return_type:ty )*
-        )*
+        $id:expr => $procedure:ident ()
+        $( , $next_id:expr => $next_procedure:ident $next_parameters:tt )*
         ; end_marker ;
         $(
             $request:ident
@@ -81,10 +68,7 @@ macro_rules! onc_rpc_program_request_enum {
         )*
     ) => {
         onc_rpc_program_request_enum! {
-            $(
-                $next_id => $next_procedure $next_parameters
-                    $( -> $next_return_type )*
-            ),*
+            $( $next_id => $next_procedure $next_parameters ),*
             ; end_marker ;
             $(
                 $request
@@ -98,11 +82,7 @@ macro_rules! onc_rpc_program_request_enum {
 
     (
         $id:expr => $procedure:ident ( $name:ident : $type:ty )
-            $( -> $return_type:ty )*
-        $(
-            , $next_id:expr => $next_procedure:ident $next_parameters:tt
-                $( -> $next_return_type:ty )*
-        )*
+        $( , $next_id:expr => $next_procedure:ident $next_parameters:tt )*
         ; end_marker ;
         $(
             $request:ident
@@ -112,10 +92,7 @@ macro_rules! onc_rpc_program_request_enum {
         )*
     ) => {
         onc_rpc_program_request_enum! {
-            $(
-                $next_id => $next_procedure $next_parameters
-                    $( -> $next_return_type )*
-            ),*
+            $( $next_id => $next_procedure $next_parameters ),*
             ; end_marker ;
             $(
                 $request
@@ -129,11 +106,7 @@ macro_rules! onc_rpc_program_request_enum {
 
     (
         $id:expr => $procedure:ident ( $( $name:ident : $type:ty ),* )
-            $( -> $return_type:ty )*
-        $(
-            , $next_id:expr => $next_procedure:ident $next_parameters:tt
-                $( -> $next_return_type:ty )*
-        )*
+        $( , $next_id:expr => $next_procedure:ident $next_parameters:tt )*
         ; end_marker ;
         $(
             $request:ident
@@ -143,10 +116,7 @@ macro_rules! onc_rpc_program_request_enum {
         )*
     ) => {
         onc_rpc_program_request_enum! {
-            $(
-                $next_id => $next_procedure $next_parameters
-                    $( -> $next_return_type )*
-            ),*
+            $( $next_id => $next_procedure $next_parameters ),*
             ; end_marker ;
             $(
                 $request

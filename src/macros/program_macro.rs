@@ -54,10 +54,7 @@ macro_rules! onc_rpc_program {
             }
 
             onc_rpc_program_request! {
-                $(
-                    $procedure_id => $procedure $parameters
-                        $( -> $result_type )*
-                ),*
+                $( $procedure_id => $procedure $parameters ),*
             }
 
             onc_rpc_program_response! {

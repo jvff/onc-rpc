@@ -3,7 +3,6 @@ macro_rules! onc_rpc_program_request_id {
     (
         $(
             $id:expr => $procedure:ident $parameters:tt
-               $( -> $return_type:ty )*
         ),*
         $(,)*
     ) => {
@@ -22,7 +21,6 @@ macro_rules! onc_rpc_program_request_id_enum {
     (
         $(
             $id:expr => $procedure:ident $parameters:tt
-               $( -> $return_type:ty )*
         ),*
         $(,)*
     ) => {
@@ -55,31 +53,23 @@ macro_rules! onc_rpc_program_request_id_from {
     };
 
     (
-        $(
-            $id:expr => $procedure:ident $parameters:tt $( -> $return_type:ty )*
-        ),*
+        $( $id:expr => $procedure:ident $parameters:tt ),*
         $(,)*
     ) => {
         onc_rpc_program_request_id_from! {
-            $( $id => $procedure $parameters $( -> $return_type )* ),*
+            $( $id => $procedure $parameters ),*
             ; end_marker ;
         }
     };
 
     (
-        $id:expr => $procedure:ident ( $(,)* ) $( -> $return_type:ty )*
-        $(
-            , $next_id:expr => $next_procedure:ident $next_parameters:tt
-                $( -> $next_return_type:ty )*
-        )*
+        $id:expr => $procedure:ident ( $(,)* )
+        $( , $next_id:expr => $next_procedure:ident $next_parameters:tt )*
         ; end_marker ;
         $( $request:pat => $resolved_id:expr, )*
     ) => {
         onc_rpc_program_request_id_from! {
-            $(
-                $next_id => $next_procedure $next_parameters
-                    $( -> $next_return_type )*
-            ),*
+            $( $next_id => $next_procedure $next_parameters ),*
             ; end_marker ;
             $( $request => $resolved_id, )*
             Request::$procedure => RequestId::$procedure,
@@ -87,19 +77,13 @@ macro_rules! onc_rpc_program_request_id_from {
     };
 
     (
-        $id:expr => $procedure:ident $parameters:tt $( -> $return_type:ty )*
-        $(
-            , $next_id:expr => $next_procedure:ident $next_parameters:tt
-                $( -> $next_return_type:ty )*
-        )*
+        $id:expr => $procedure:ident $parameters:tt
+        $( , $next_id:expr => $next_procedure:ident $next_parameters:tt )*
         ; end_marker ;
         $( $request:pat => $resolved_id:expr, )*
     ) => {
         onc_rpc_program_request_id_from! {
-            $(
-                $next_id => $next_procedure $next_parameters
-                    $( -> $next_return_type )*
-            ),*
+            $( $next_id => $next_procedure $next_parameters ),*
             ; end_marker ;
             $( $request => $resolved_id, )*
             Request::$procedure(_) => RequestId::$procedure,
