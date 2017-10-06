@@ -8,8 +8,7 @@ macro_rules! onc_rpc_program {
         {
             $(
                 $procedure_id:expr => $procedure:ident $parameters:tt
-                    $( -> $result_type:ty )*
-                    $( => $result_future_alias:ident )*
+                    -> $result_future:ident < $result_type:ty >
             ),*
             $(,)*
         }
@@ -58,13 +57,13 @@ macro_rules! onc_rpc_program {
             }
 
             onc_rpc_program_response! {
-                $( $procedure $( -> $result_type )* ),*
+                $( $procedure -> $result_type ),*
             }
 
             pub use self::response::Response;
 
             onc_rpc_program_procedures! {
-                $( $procedure $parameters $( -> $result_type )* ),*
+                $( $procedure $parameters -> $result_type ),*
             }
 
             use self::procedures::ProcedureMessage;
@@ -108,10 +107,8 @@ macro_rules! onc_rpc_program {
         }
 
         $(
-            $(
-                pub use self::$module::procedures::$procedure::ResponseResult
-                    as $result_future_alias;
-            )*
+            pub use self::$module::procedures::$procedure::ResponseResult
+                as $result_future;
         )*
     };
 }

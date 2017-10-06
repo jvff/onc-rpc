@@ -9,13 +9,13 @@ onc_rpc! {
         version = 2;
 
         procedures {
-            0 => null(),
-            1 => set(program: Mapping) -> bool => SetResult,
-            2 => unset(program: Mapping) -> bool => UnsetResult,
-            3 => get_port(program: Mapping) -> u32 => GetPortResult,
-            4 => dump() -> Vec<Mapping> => DumpResult,
-            5 => call_broadcast(arguments: CallArgs) -> CallResult
-                => CallBroadcastResult,
+            0 => null() -> NullResult<()>,
+            1 => set(program: Mapping) -> SetResult<bool>,
+            2 => unset(program: Mapping) -> UnsetResult<bool>,
+            3 => get_port(program: Mapping) -> GetPortResult<u32>,
+            4 => dump() -> DumpResult<Vec<Mapping>>,
+            5 => call_broadcast(arguments: CallArgs)
+                -> CallBroadcastResult<CallResult>,
         }
     }
 }
