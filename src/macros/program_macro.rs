@@ -103,11 +103,7 @@ macro_rules! onc_rpc_program {
                     Connect::new(address, handle)
                 }
 
-                $(
-                    onc_rpc_program_method!{
-                        $procedure $parameters $( -> $result_type )*
-                    }
-                )*
+                $( onc_rpc_program_method!($procedure $parameters); )*
             }
         }
 
@@ -123,10 +119,6 @@ macro_rules! onc_rpc_program {
 #[macro_export]
 macro_rules! onc_rpc_program_method {
     ( $procedure:ident () ) => {
-        onc_rpc_program_method!($procedure() -> ());
-    };
-
-    ( $procedure:ident () -> $result:ty ) => {
         pub fn $procedure(&self) -> procedures::$procedure::ResponseResult {
             let request = Request::$procedure;
 
@@ -135,12 +127,6 @@ macro_rules! onc_rpc_program_method {
     };
 
     ( $procedure:ident ( $parameter:ident : $type:ty $(,)* ) ) => {
-        onc_rpc_program_method!($procedure($parameter: $type) -> ());
-    };
-
-    (
-        $procedure:ident ( $parameter:ident : $type:ty $(,)* ) -> $result:ty
-    ) => {
         pub fn $procedure<P>(
             &self,
             $parameter: P,
@@ -155,13 +141,6 @@ macro_rules! onc_rpc_program_method {
     };
 
     ( $procedure:ident ( $( $parameter:ident : $type:ty ),* $(,)* ) ) => {
-        onc_rpc_program_method!($procedure($parameter: $type) -> ());
-    };
-
-    (
-        $procedure:ident ( $( $parameter:ident : $type:ty ),* $(,)* )
-            -> $result:ty
-    ) => {
         pub fn $procedure(
             &self,
             $( $parameter: $type, )*
