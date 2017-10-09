@@ -6,6 +6,7 @@ macro_rules! onc_rpc {
                 id = $id:expr ;
                 version = $version:expr ;
                 $( connect = $connect_alias:ident ; )*
+                $( client = $client_alias:ident ; )*
 
                 procedures $procedures:tt
             }
@@ -15,6 +16,8 @@ macro_rules! onc_rpc {
             onc_rpc_program!($module, $name, $id, $version, $procedures);
 
             pub use self::$module::$name;
+
+            $( pub use self::$module::Client as $client_alias; )*
 
             $( pub type $connect_alias = $crate::FindPortAndConnect<$name>; )*
         )*

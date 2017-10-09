@@ -7,6 +7,7 @@ onc_rpc! {
     program(port_mapper::PortMapper) {
         id = 100_000;
         version = 2;
+        client = PortMapperClient;
 
         procedures {
             0 => null() -> NullResult<()>,
@@ -19,7 +20,5 @@ onc_rpc! {
         }
     }
 }
-
-pub use self::port_mapper::Client as PortMapperClient;
 
 pub type PortMapperConnect = Connect<port_mapper::Client>;
