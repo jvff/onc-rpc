@@ -20,4 +20,6 @@ onc_rpc! {
     }
 }
 
-pub type PortMapperConnect = Connect<PortMapper>;
+pub use self::port_mapper::Client as PortMapperClient;
+
+pub type PortMapperConnect = Connect<port_mapper::Client>;

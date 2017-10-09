@@ -17,7 +17,7 @@ macro_rules! onc_rpc_program {
         pub mod $module {
             use std::net::{IpAddr, SocketAddr};
 
-            use futures::future::{Flatten, FutureResult};
+            use futures::future::{Flatten, Future, FutureResult};
             use tokio_core::net::TcpStream;
             use tokio_core::reactor::Handle;
             use tokio_proto::multiplex::{ClientFuture, ClientService};
@@ -76,19 +76,34 @@ macro_rules! onc_rpc_program {
                 type ProcedureMessage = ProcedureMessage;
             }
 
-            pub struct $name {
+            pub trait $name {
+                type Error;
+
+                $(
+                    type $result_future:
+                        Future<Item = $result_type, Error = Self::Error>;
+                )*
+
+                $(
+                    onc_rpc_program_trait_method! {
+                        $procedure $parameters -> $result_future
+                    }
+                )*
+            }
+
+            pub struct Client {
                 pub rpc_service: RpcService<RecordService, ServiceConfig>,
             }
 
-            impl From<RecordService> for $name {
+            impl From<RecordService> for Client {
                 fn from(record_service: RecordService) -> Self {
-                    $name {
+                    Client {
                         rpc_service: RpcService::from(record_service),
                     }
                 }
             }
 
-            impl $name {
+            impl Client {
                 pub fn connect(address: IpAddr, handle: &Handle)
                     -> FindPortAndConnect<Self>
                 {
@@ -101,8 +116,17 @@ macro_rules! onc_rpc_program {
                 ) -> Connect<Self> {
                     Connect::new(address, handle)
                 }
+            }
 
-                $( onc_rpc_program_method!($procedure $parameters); )*
+            impl $name for Client {
+                type Error = Error;
+
+                $(
+                    type $result_future =
+                        procedures::$procedure::ResponseResult;
+                )*
+
+                $( onc_rpc_program_client_method!($procedure $parameters); )*
             }
         }
 
@@ -114,9 +138,32 @@ macro_rules! onc_rpc_program {
 }
 
 #[macro_export]
-macro_rules! onc_rpc_program_method {
+macro_rules! onc_rpc_program_trait_method {
+    ( $procedure:ident () -> $result_future:ident ) => {
+        fn $procedure(&self) -> Self::$result_future;
+    };
+
+    (
+        $procedure:ident ( $parameter:ident : $type:ty $(,)* )
+            -> $result_future:ident
+    ) => {
+        fn $procedure<P>(&self, $parameter: P) -> Self::$result_future
+        where
+            P: Into<$type>;
+    };
+
+    (
+        $procedure:ident ( $( $parameter:ident : $type:ty ),* $(,)* )
+            -> $result_future:ident
+    ) => {
+        fn $procedure(&self, $( $parameter: $type, )*) -> Self::$result_future;
+    };
+}
+
+#[macro_export]
+macro_rules! onc_rpc_program_client_method {
     ( $procedure:ident () ) => {
-        pub fn $procedure(&self) -> procedures::$procedure::ResponseResult {
+        fn $procedure(&self) -> procedures::$procedure::ResponseResult {
             let request = Request::$procedure;
 
             self.rpc_service.call(request).into()
@@ -124,7 +171,7 @@ macro_rules! onc_rpc_program_method {
     };
 
     ( $procedure:ident ( $parameter:ident : $type:ty $(,)* ) ) => {
-        pub fn $procedure<P>(
+        fn $procedure<P>(
             &self,
             $parameter: P,
         ) -> procedures::$procedure::ResponseResult
@@ -138,7 +185,7 @@ macro_rules! onc_rpc_program_method {
     };
 
     ( $procedure:ident ( $( $parameter:ident : $type:ty ),* $(,)* ) ) => {
-        pub fn $procedure(
+        fn $procedure(
             &self,
             $( $parameter: $type, )*
         ) -> procedures::$procedure::ResponseResult {
