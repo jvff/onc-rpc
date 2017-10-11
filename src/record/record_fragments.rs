@@ -16,19 +16,27 @@ impl<'a> RecordFragments for &'a [u8] {
     }
 
     fn is_full_record(&self) -> bool {
-        let min_length = 4 + self.length();
-        let reborrow = &*self;
+        if self.len() >= 4 {
+            let min_length = 4 + self.length();
+            let reborrow = &*self;
 
-        if self.as_ref().len() < min_length {
-            false
-        } else if self.is_last() {
-            true
+            if self.as_ref().len() < min_length {
+                false
+            } else if self.is_last() {
+                true
+            } else {
+                reborrow.next().is_full_record()
+            }
         } else {
-            reborrow.next().is_full_record()
+            false
         }
     }
 
     fn full_record_length(&self) -> Option<usize> {
+        if self.len() < 4 {
+            return None;
+        }
+
         let fragment_length = 4 + self.length();
         let reborrow = &*self;
 
