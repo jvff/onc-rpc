@@ -13,7 +13,7 @@ impl Decoder for RecordCodec {
     type Error = Error;
 
     fn decode(&mut self, buffer: &mut BytesMut) -> Result<Option<Self::Item>> {
-        if buffer.len() < 4 {
+        if !(&buffer as &[u8]).is_full_record() {
             return Ok(None);
         }
 
