@@ -12,7 +12,7 @@ use super::try_from::TryFrom;
 use super::super::errors::{Error, Result};
 use super::super::record::Record;
 
-pub struct RpcService<S, P>
+pub struct RpcClientService<S, P>
 where
     S: Service<Request = Record<Vec<u8>>, Response = Record<Vec<u8>>>,
     P: RpcServiceConfig,
@@ -23,7 +23,7 @@ where
     _service_parameters: PhantomData<P>,
 }
 
-impl<S, P> From<S> for RpcService<S, P>
+impl<S, P> From<S> for RpcClientService<S, P>
 where
     S: Service<Request = Record<Vec<u8>>, Response = Record<Vec<u8>>>,
     P: RpcServiceConfig,
@@ -31,14 +31,14 @@ where
         + From<<P::Response as TryFrom<P::ProcedureMessage>>::Error>,
 {
     fn from(record_service: S) -> Self {
-        RpcService {
+        RpcClientService {
             record_service,
             _service_parameters: PhantomData,
         }
     }
 }
 
-impl<S, P> RpcService<S, P>
+impl<S, P> RpcClientService<S, P>
 where
     S: Service<Request = Record<Vec<u8>>, Response = Record<Vec<u8>>>,
     P: RpcServiceConfig,
@@ -60,7 +60,7 @@ where
     }
 }
 
-impl<S, P> Service for RpcService<S, P>
+impl<S, P> Service for RpcClientService<S, P>
 where
     S: Service<Request = Record<Vec<u8>>, Response = Record<Vec<u8>>>,
     P: RpcServiceConfig,

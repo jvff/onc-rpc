@@ -24,8 +24,8 @@ macro_rules! onc_rpc_program {
             use tokio_service::Service;
 
             use $crate::{CallFuture, Connect, Error, FindPortAndConnect,
-                         RecordProtocol, RpcProgram, RpcServiceConfig,
-                         RpcService};
+                         RecordProtocol, RpcClientService, RpcProgram,
+                         RpcServiceConfig};
 
             use super::*;
 

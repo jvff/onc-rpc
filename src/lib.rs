@@ -28,5 +28,5 @@ pub use self::message::RpcMessage;
 pub use self::record::{Record, RecordProtocol};
 pub use self::rpc::{RpcCall, RpcProcedure, RpcProgram};
 pub use self::service::{CallFuture, Connect, DeserializeWithHint,
-                        FindPortAndConnect, RpcRequest, RpcService,
+                        FindPortAndConnect, RpcClientService, RpcRequest,
                         RpcServiceConfig, TryFrom};

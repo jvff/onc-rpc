@@ -8,13 +8,13 @@ macro_rules! onc_rpc_program_client {
         $(,)*
     ) => {
         pub struct Client {
-            pub rpc_service: RpcService<RecordService, ServiceConfig>,
+            pub rpc_service: RpcClientService<RecordService, ServiceConfig>,
         }
 
         impl From<RecordService> for Client {
             fn from(record_service: RecordService) -> Self {
                 Client {
-                    rpc_service: RpcService::from(record_service),
+                    rpc_service: RpcClientService::from(record_service),
                 }
             }
         }
