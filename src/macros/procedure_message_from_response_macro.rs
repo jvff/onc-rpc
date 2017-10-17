@@ -34,24 +34,12 @@ macro_rules! onc_rpc_program_procedure_message_from_response {
             $( -> $next_result_type:ty )*
         )*
         ;@end_marker
-        $(
-            $converted_procedure:ident
-            $( ( $converted_result:ident ) )*
-            =>
-            $conversion:tt
-            ,
-        )*
+        $( $ready:tt )*
     ) => {
         onc_rpc_program_procedure_message_from_response! {
             $( $next_procedure $( -> $next_result_type )* ),*
             ;@end_marker
-            $(
-                $converted_procedure
-                $( ($converted_result) )*
-                =>
-                $conversion
-                ,
-            )*
+            $( $ready )*
             $procedure => {
                 ProcedureMessage::$procedure(RpcMessage::from_reply(()))
             },
@@ -66,24 +54,12 @@ macro_rules! onc_rpc_program_procedure_message_from_response {
             $( -> $next_result_type:ty )*
         )*
         ;@end_marker
-        $(
-            $converted_procedure:ident
-            $( ( $converted_result:ident ) )*
-            =>
-            $conversion:tt
-            ,
-        )*
+        $( $ready:tt )*
     ) => {
         onc_rpc_program_procedure_message_from_response! {
             $( $next_procedure $( -> $next_result_type )* ),*
             ;@end_marker
-            $(
-                $converted_procedure
-                $( ($converted_result) )*
-                =>
-                $conversion
-                ,
-            )*
+            $( $ready )*
             $procedure(result) => {
                 ProcedureMessage::$procedure(RpcMessage::from_reply(result))
             },
