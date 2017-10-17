@@ -37,6 +37,13 @@ impl<P> RpcMessage<P>
 where
     P: RpcProcedure,
 {
+    pub fn from_reply(rpc_reply: P::ResultData) -> Self {
+        RpcMessage {
+            transaction_id: u32::max_value(),
+            body: RpcBody::Reply(rpc_reply.into()),
+        }
+    }
+
     pub fn into_reply(self) -> Result<P::ResultData> {
         self.body.into_reply()
     }

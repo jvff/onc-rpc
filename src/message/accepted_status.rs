@@ -13,6 +13,12 @@ pub enum AcceptedStatus<T> {
     SystemError,
 }
 
+impl<T> From<T> for AcceptedStatus<T> {
+    fn from(data: T) -> Self {
+        AcceptedStatus::Success(data)
+    }
+}
+
 impl<T> Into<Result<T>> for AcceptedStatus<T> {
     fn into(self) -> Result<T> {
         match self {

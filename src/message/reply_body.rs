@@ -8,6 +8,12 @@ pub enum ReplyBody<T> {
     Denied(RejectedReply),
 }
 
+impl<T> From<T> for ReplyBody<T> {
+    fn from(data: T) -> Self {
+        ReplyBody::Accepted(data.into())
+    }
+}
+
 impl<T> Into<Result<T>> for ReplyBody<T> {
     fn into(self) -> Result<T> {
         match self {
