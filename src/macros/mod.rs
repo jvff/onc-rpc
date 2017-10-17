@@ -3,6 +3,7 @@
 #[macro_use] mod procedure_macro;
 #[macro_use] mod procedure_message_macro;
 #[macro_use] mod procedure_message_from_request_macro;
+#[macro_use] mod procedure_message_from_response_macro;
 #[macro_use] mod procedures_macro;
 #[macro_use] mod program_macro;
 #[macro_use] mod request_macro;

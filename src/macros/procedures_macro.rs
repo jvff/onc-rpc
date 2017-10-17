@@ -19,7 +19,7 @@ macro_rules! onc_rpc_program_procedures {
             )*
 
             onc_rpc_program_procedure_message! {
-                $( $procedure $parameters ),*
+                $( $procedure $parameters $( -> $result_type )* ),*
             }
         }
     };
