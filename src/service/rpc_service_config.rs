@@ -9,6 +9,7 @@ pub trait RpcServiceConfig {
     type Response: TryFrom<Self::ProcedureMessage>;
     type ProcedureMessage:
         From<Self::Request>
+            + From<Self::Response>
             + Serialize
             + DeserializeWithHint<<Self::Request as RpcRequest>::ResponseHint>;
 }
