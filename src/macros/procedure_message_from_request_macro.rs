@@ -36,32 +36,14 @@ macro_rules! onc_rpc_program_procedure_message_from_request {
 
     (
         $procedure:ident ()
-        $(
-            ,
-            $next_procedure:ident
-            ( $( $next_name:ident : $next_type:ty ),* )
-        )*
+        $( , $next_procedure:ident $next_parameters:tt )*
         @end_marker
-        $(
-            $converted_procedure:ident
-            $( ( $converted_parameter:ident ) )*
-            $( { $( $converted_field:ident ),* } )*
-            =>
-            $conversion:tt
-            ,
-        )*
+        $( $ready:tt )*
     ) => {
         onc_rpc_program_procedure_message_from_request! {
-            $( $next_procedure( $( $next_name: $next_type ),* ) ),*
+            $( $next_procedure $next_parameters ),*
             @end_marker
-            $(
-                $converted_procedure
-                $( ( $converted_parameter ) )*
-                $( { $( $converted_field ),* } )*
-                =>
-                $conversion
-                ,
-            )*
+            $( $ready )*
             $procedure => {
                 let parameters = $procedure::Parameters::default();
 
@@ -72,32 +54,14 @@ macro_rules! onc_rpc_program_procedure_message_from_request {
 
     (
         $procedure:ident ( $name:ident : $type:ty )
-        $(
-            ,
-            $next_procedure:ident
-            ( $( $next_name:ident : $next_type:ty ),* )
-        )*
+        $( , $next_procedure:ident $next_parameters:tt )*
         @end_marker
-        $(
-            $converted_procedure:ident
-            $( ( $converted_parameter:ident ) )*
-            $( { $( $converted_field:ident ),* } )*
-            =>
-            $conversion:tt
-            ,
-        )*
+        $( $ready:tt )*
     ) => {
         onc_rpc_program_procedure_message_from_request! {
-            $( $next_procedure( $( $next_name: $next_type ),* ) ),*
+            $( $next_procedure $next_parameters ),*
             @end_marker
-            $(
-                $converted_procedure
-                $( ( $converted_parameter ) )*
-                $( { $( $converted_field ),* } )*
-                =>
-                $conversion
-                ,
-            )*
+            $( $ready )*
             $procedure($name) => {
                 let parameters = $procedure::Parameters::from($name);
 
@@ -108,32 +72,14 @@ macro_rules! onc_rpc_program_procedure_message_from_request {
 
     (
         $procedure:ident ( $( $name:ident : $type:ty ),* )
-        $(
-            ,
-            $next_procedure:ident
-            ( $( $next_name:ident : $next_type:ty ),* )
-        )*
+        $( , $next_procedure:ident $next_parameters:tt )*
         @end_marker
-        $(
-            $converted_procedure:ident
-            $( ( $converted_parameter:ident ) )*
-            $( { $( $converted_field:ident ),* } )*
-            =>
-            $conversion:tt
-            ,
-        )*
+        $( $ready:tt )*
     ) => {
         onc_rpc_program_procedure_message_from_request! {
-            $( $next_procedure( $( $next_name: $next_type ),* ) ),*
+            $( $next_procedure $next_parameters ),*
             @end_marker
-            $(
-                $converted_procedure
-                $( ( $converted_parameter ) )*
-                $( { $( $converted_field ),* } )*
-                =>
-                $conversion
-                ,
-            )*
+            $( $ready )*
             $procedure { $( $name ),* } => {
                 let parameters = $procedure::Parameters::new( $( $name ),* );
 
