@@ -34,3 +34,9 @@ where
         }
     }
 }
+
+impl CallHeader {
+    pub fn procedure(&self) -> u32 {
+        self.procedure
+    }
+}
