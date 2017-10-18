@@ -1,14 +1,9 @@
-use super::auth_data::AuthData;
-use super::super::rpc::{RpcCall, RpcProcedure, RpcProgram};
+use super::call_header::CallHeader;
+use super::super::rpc::{RpcCall, RpcProcedure};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct CallBody<T> {
-    rpc_version: u32,
-    program: u32,
-    version: u32,
-    procedure: u32,
-    credentials: AuthData,
-    verifier: AuthData,
+    header: CallHeader,
     parameters: T,
 }
 
@@ -18,21 +13,10 @@ where
     C::Procedure: RpcProcedure<Parameters = T>,
 {
     fn from(rpc_call: C) -> Self {
-        let program =
-            <<C::Procedure as RpcProcedure>::Program as RpcProgram>::program();
-
-        let version =
-            <<C::Procedure as RpcProcedure>::Program as RpcProgram>::version();
-
-        let procedure = <C::Procedure as RpcProcedure>::procedure();
+        let header = CallHeader::from(&rpc_call);
 
         CallBody {
-            rpc_version: 2,
-            program,
-            version,
-            procedure,
-            credentials: rpc_call.credentials(),
-            verifier: rpc_call.verifier(),
+            header,
             parameters: rpc_call.parameters(),
         }
     }

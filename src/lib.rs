@@ -24,7 +24,7 @@ mod service;
 pub mod port_mapper;
 
 pub use self::errors::{Error, ErrorKind, Result, ResultExt};
-pub use self::message::RpcMessage;
+pub use self::message::{CallHeader, RpcMessage};
 pub use self::record::{Record, RecordProtocol};
 pub use self::rpc::{RpcCall, RpcProcedure, RpcProgram};
 pub use self::service::{CallFuture, Connect, DeserializeWithHint,
