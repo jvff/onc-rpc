@@ -21,3 +21,9 @@ where
         }
     }
 }
+
+impl<T> CallBody<T> {
+    pub fn new(header: CallHeader, parameters: T) -> Self {
+        CallBody { header, parameters }
+    }
+}
