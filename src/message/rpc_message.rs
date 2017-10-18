@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use super::call_body::CallBody;
+use super::call_header::CallHeader;
 use super::rpc_body::RpcBody;
 use super::super::errors::Result;
 use super::super::rpc::{RpcCall, RpcProcedure};
@@ -37,6 +39,19 @@ impl<P> RpcMessage<P>
 where
     P: RpcProcedure,
 {
+    pub fn new_call(
+        transaction_id: u32,
+        call_header: CallHeader,
+        parameters: P::Parameters,
+    ) -> Self {
+        let call_body = CallBody::new(call_header, parameters);
+
+        RpcMessage {
+            transaction_id,
+            body: RpcBody::Call(call_body),
+        }
+    }
+
     pub fn from_reply(rpc_reply: P::ResultData) -> Self {
         RpcMessage {
             transaction_id: u32::max_value(),
