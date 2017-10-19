@@ -14,6 +14,12 @@ macro_rules! onc_rpc_program_request {
                 $( $id => $procedure $parameters, )*
             }
 
+            $(
+                onc_rpc_program_request_from_parameters! {
+                    $procedure $parameters
+                }
+            )*
+
             impl RpcRequest for Request {
                 type ResponseHint = RequestId;
 
@@ -127,6 +133,35 @@ macro_rules! onc_rpc_program_request_enum {
             $procedure {
                 $( $name: $type, )*
             },
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! onc_rpc_program_request_from_parameters {
+    ( $procedure:ident () ) => {
+        impl From<procedures::$procedure::Parameters> for Request {
+            fn from(_parameters: procedures::$procedure::Parameters) -> Self {
+                Request::$procedure
+            }
+        }
+    };
+
+    ( $procedure:ident ( $name:ident : $type:ty $(,)* ) ) => {
+        impl From<procedures::$procedure::Parameters> for Request {
+            fn from(parameters: procedures::$procedure::Parameters) -> Self {
+                Request::$procedure(parameters.into())
+            }
+        }
+    };
+
+    ( $procedure:ident ( $( $name:ident : $type:ty ),* $(,)* ) ) => {
+        impl From<procedures::$procedure::Parameters> for Request {
+            fn from(parameters: procedures::$procedure::Parameters) -> Self {
+                Request::$procedure {
+                    $( $name: parameters.$name(), )*
+                }
+            }
         }
     };
 }
