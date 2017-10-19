@@ -17,8 +17,6 @@ pub struct RpcServerService<S, P>
 where
     S: Service<Request = P::Request, Response = P::Response>,
     P: RpcServiceConfig,
-    Error: From<S::Error>
-        + From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
 {
     rpc_service: S,
     _service_parameters: PhantomData<P>,

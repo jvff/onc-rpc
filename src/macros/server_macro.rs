@@ -35,10 +35,8 @@ macro_rules! onc_rpc_program_server {
                     Error: From<P::Error>,
                 {
                     let service = ServerService::from(program);
-                    let rpc_service:
-                        RpcServerService<ServerService<P>, ServiceConfig>;
-
-                    rpc_service = service.into();
+                    let rpc_service: RpcServerService<_, ServiceConfig> =
+                        service.into();
 
                     self.server.serve(rpc_service);
                 }
