@@ -8,6 +8,7 @@ onc_rpc! {
         id = 100_000;
         version = 2;
         client = PortMapperClient;
+        server = PortMapperServer;
 
         procedures {
             0 => null() -> NullResult<()>,
