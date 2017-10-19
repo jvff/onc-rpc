@@ -7,6 +7,7 @@ mod find_port_and_connect;
 mod reply_future;
 mod rpc_client_service;
 mod rpc_request;
+mod rpc_server;
 mod rpc_server_service;
 mod rpc_service_config;
 
@@ -19,5 +20,6 @@ pub use self::find_port_and_connect::FindPortAndConnect;
 pub use self::reply_future::ReplyFuture;
 pub use self::rpc_client_service::RpcClientService;
 pub use self::rpc_request::RpcRequest;
+pub use self::rpc_server::RpcServer;
 pub use self::rpc_server_service::RpcServerService;
 pub use self::rpc_service_config::RpcServiceConfig;
