@@ -19,7 +19,7 @@ macro_rules! onc_rpc {
             pub use self::$module::$name;
 
             $( pub use self::$module::Client as $client_alias; )*
-            $( pub use self::$module::server::Server as $server_alias; )*
+            $( pub use self::$module::Server as $server_alias; )*
 
             $( pub type $connect_alias = $crate::FindPortAndConnect<$name>; )*
         )*
