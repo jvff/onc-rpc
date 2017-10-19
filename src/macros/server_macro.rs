@@ -14,7 +14,7 @@ macro_rules! onc_rpc_program_server {
             use super::{Error, Request, Response, ServiceConfig};
             use super::$program;
 
-            use $crate::{RpcServer, RpcServerService};
+            use $crate::RpcServer;
 
             onc_rpc_program_server_response_future! {
                 $program,
@@ -34,11 +34,7 @@ macro_rules! onc_rpc_program_server {
                     P: 'static + Clone + $program + Send + Sync,
                     Error: From<P::Error>,
                 {
-                    let service = ServerService::from(program);
-                    let rpc_service: RpcServerService<_, ServiceConfig> =
-                        service.into();
-
-                    self.serve_service(rpc_service);
+                    self.serve_rpc_service(ServerService::from(program));
                 }
             }
         }

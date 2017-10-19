@@ -26,8 +26,8 @@ impl<S, P> From<S> for RpcServerService<S, P>
 where
     S: Service<Request = P::Request, Response = P::Response>,
     P: RpcServiceConfig,
-    Error: From<S::Error>
-        + From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
+    S::Error: Into<Error>,
+    <P::Request as TryFrom<P::ProcedureMessage>>::Error: Into<Error>,
 {
     fn from(rpc_service: S) -> Self {
         RpcServerService {
@@ -41,8 +41,9 @@ impl<S, P> RpcServerService<S, P>
 where
     S: Service<Request = P::Request, Response = P::Response>,
     P: RpcServiceConfig,
-    Error: From<S::Error>
-        + From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
+    S::Error: Into<Error>,
+    Error: From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
+    //<P::Request as TryFrom<P::ProcedureMessage>>::Error: Into<Error>,
 {
     fn try_call(
         &self,
@@ -62,8 +63,8 @@ impl<S, P> Service for RpcServerService<S, P>
 where
     S: Service<Request = P::Request, Response = P::Response>,
     P: RpcServiceConfig,
-    Error: From<S::Error>
-        + From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
+    S::Error: Into<Error>,
+    Error: From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
 {
     type Request = Record<Vec<u8>>;
     type Response = Record<Vec<u8>>;
@@ -85,8 +86,8 @@ where
             Error = <S as Service>::Error,
         >,
     P: RpcServiceConfig,
-    Error: From<<S as Service>::Error>
-        + From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
+    <S as Service>::Error: Into<Error>,
+    Error: From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
 {
     type Request = Record<Vec<u8>>;
     type Response = Record<Vec<u8>>;
