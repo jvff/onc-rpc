@@ -23,6 +23,14 @@ macro_rules! onc_rpc_program_procedure_parameters {
             }
         }
 
+        impl From<Parameters> for $type {
+            fn from(parameters: Parameters) -> Self {
+                match parameters {
+                    Parameters(value) => value,
+                }
+            }
+        }
+
         onc_rpc_program_procedure_parameters_rpc_call!();
     };
 
@@ -38,6 +46,12 @@ macro_rules! onc_rpc_program_procedure_parameters {
                     $( $name, )*
                 }
             }
+
+            $(
+                pub fn $name(&self) -> $type {
+                    self.$name
+                }
+            )*
         }
 
         onc_rpc_program_procedure_parameters_rpc_call!();
