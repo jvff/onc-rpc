@@ -11,5 +11,6 @@
 #[macro_use] mod response_macro;
 #[macro_use] mod response_future_macro;
 #[macro_use] mod response_result_macro;
+#[macro_use] mod server_service_macro;
 
 #[macro_use] mod onc_rpc_macro;
