@@ -5,9 +5,14 @@ macro_rules! onc_rpc_program_procedures {
         $(,)*
     ) => {
         pub mod procedures {
-            use serde::{Deserialize, Deserializer};
+            use std::fmt;
+            use std::fmt::Formatter;
 
-            use $crate::{DeserializeWithHint, RpcMessage};
+            use serde::de;
+            use serde::de::{Deserialize, Deserializer, Visitor, SeqAccess};
+
+            use $crate::{CallHeader, DeserializeWithHint, RpcMessage,
+                         RpcProcedure};
 
             use super::*;
             use super::request::{Request, RequestId};
