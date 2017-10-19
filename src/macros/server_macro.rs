@@ -38,7 +38,7 @@ macro_rules! onc_rpc_program_server {
                     let rpc_service: RpcServerService<_, ServiceConfig> =
                         service.into();
 
-                    self.server.serve(rpc_service);
+                    self.serve_service(rpc_service);
                 }
             }
         }
