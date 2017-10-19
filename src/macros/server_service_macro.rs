@@ -62,7 +62,7 @@ macro_rules! onc_rpc_program_server_service {
             type Request = Request;
             type Response = Response;
             type Error = Error;
-            type Instance = ServerService<P>;
+            type Instance = Self;
 
             fn new_service(&self) -> io::Result<Self::Instance> {
                 Ok(self.program.clone().into())
