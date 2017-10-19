@@ -59,6 +59,10 @@ where
         }
     }
 
+    pub fn into_parameters(self) -> Result<P::Parameters> {
+        self.body.into_parameters()
+    }
+
     pub fn into_reply(self) -> Result<P::ResultData> {
         self.body.into_reply()
     }

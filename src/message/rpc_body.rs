@@ -20,6 +20,13 @@ where
 }
 
 impl<C, R> RpcBody<C, R> {
+    pub fn into_parameters(self) -> Result<C> {
+        match self {
+            RpcBody::Call(body) => Ok(body.into_parameters()),
+            RpcBody::Reply(_) => bail!(ErrorKind::CantConvertResultToCall),
+        }
+    }
+
     pub fn into_reply(self) -> Result<R> {
         match self {
             RpcBody::Call(_) => bail!(ErrorKind::CantConvertCallToResult),
