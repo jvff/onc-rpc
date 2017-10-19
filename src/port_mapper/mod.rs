@@ -4,6 +4,7 @@ mod mapping;
 mod protocol;
 
 mod port_mapper;
+mod hash_map_port_mapper;
 
 pub use self::call_args::CallArgs;
 pub use self::call_result::CallResult;
