@@ -97,6 +97,11 @@ macro_rules! onc_rpc_program {
                 $version,
                 { $( $procedure $parameters -> $result_future ),* }
             }
+
+            onc_rpc_program_server! {
+                $name,
+                { $( $procedure $parameters -> $result_future ),* }
+            }
         }
 
         $(
