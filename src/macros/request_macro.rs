@@ -2,7 +2,7 @@
 macro_rules! onc_rpc_program_request {
     ( $( $id:expr => $procedure:ident $parameters:tt ),* $(,)* ) => {
         mod request {
-            use $crate::RpcRequest;
+            use $crate::{RpcRequest, TryFrom};
 
             use super::*;
 
@@ -47,6 +47,20 @@ macro_rules! onc_rpc_program_request_enum {
         #[allow(non_camel_case_types)]
         pub enum Request {
             $( $request $( ($parameter) )* $( { $( $name: $type, )* } )*, )*
+        }
+
+        impl TryFrom<ProcedureMessage> for Request {
+            type Error = Error;
+
+            fn try_from(message: ProcedureMessage) -> Result<Self, Error> {
+                match message {
+                    $(
+                        ProcedureMessage::$request(rpc_message) => {
+                            Ok(rpc_message.into_parameters()?.into())
+                        }
+                    )*
+                }
+            }
         }
     };
 
