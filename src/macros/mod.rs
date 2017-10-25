@@ -14,5 +14,6 @@
 #[macro_use] mod response_result_macro;
 #[macro_use] mod server_macro;
 #[macro_use] mod server_service_macro;
+#[macro_use] mod sync_client_macro;
 
 #[macro_use] mod onc_rpc_macro;

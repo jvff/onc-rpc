@@ -22,5 +22,14 @@ macro_rules! onc_rpc_program_client {
                 $( $procedure $parameters -> $result_future ),*
             }
         }
+
+        onc_rpc_program_sync_client! {
+            $program,
+            $id,
+            $version,
+            {
+                $( $procedure $parameters -> $result_type ),*
+            }
+        }
     };
 }
