@@ -8,6 +8,7 @@ onc_rpc! {
         id = 100_000;
         version = 2;
         async_client = PortMapperAsyncClient;
+        sync_client = PortMapperSyncClient;
         server = PortMapperServerWrapper;
 
         procedures {

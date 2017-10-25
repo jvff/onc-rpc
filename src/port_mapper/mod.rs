@@ -14,5 +14,6 @@ pub use self::mapping::Mapping;
 pub use self::protocol::Protocol;
 
 pub use self::port_mapper::{GetPortResult, PortMapper, PortMapperAsyncClient,
-                            PortMapperConnect, PortMapperServerWrapper};
+                            PortMapperConnect, PortMapperServerWrapper,
+                            PortMapperSyncClient};
 pub use self::port_mapper_server::PortMapperServer;
