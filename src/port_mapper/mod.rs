@@ -13,6 +13,6 @@ pub use self::call_result::CallResult;
 pub use self::mapping::Mapping;
 pub use self::protocol::Protocol;
 
-pub use self::port_mapper::{GetPortResult, PortMapper, PortMapperClient,
+pub use self::port_mapper::{GetPortResult, PortMapper, PortMapperAsyncClient,
                             PortMapperConnect, PortMapperServerWrapper};
 pub use self::port_mapper_server::PortMapperServer;

@@ -6,7 +6,7 @@ macro_rules! onc_rpc {
                 id = $id:expr ;
                 version = $version:expr ;
                 $( connect = $connect_alias:ident ; )*
-                $( client = $client_alias:ident ; )*
+                $( async_client = $async_client_alias:ident ; )*
                 $( server = $server_alias:ident ; )*
 
                 procedures $procedures:tt
@@ -18,7 +18,7 @@ macro_rules! onc_rpc {
 
             pub use self::$module::$name;
 
-            $( pub use self::$module::Client as $client_alias; )*
+            $( pub use self::$module::AsyncClient as $async_client_alias; )*
             $( pub use self::$module::Server as $server_alias; )*
 
             $( pub type $connect_alias = $crate::FindPortAndConnect<$name>; )*

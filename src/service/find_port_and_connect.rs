@@ -9,7 +9,7 @@ use tokio_proto::multiplex::ClientService;
 use super::connect::Connect;
 use super::super::errors::{Error, ErrorKind};
 use super::super::port_mapper::{GetPortResult, Mapping, PortMapper,
-                                PortMapperClient, PortMapperConnect};
+                                PortMapperAsyncClient, PortMapperConnect};
 use super::super::record::RecordProtocol;
 
 pub struct FindPortAndConnect<T>
@@ -41,7 +41,7 @@ where
         );
 
         let connect_to_port_mapper =
-            PortMapperClient::connect_to_known_port(
+            PortMapperAsyncClient::connect_to_known_port(
                 SocketAddr::new(address.clone(), 111),
                 handle,
             )
@@ -63,7 +63,7 @@ where
 
     fn get_port(
         (port_mapper, (address, program_id, program_version, handle)):
-            (PortMapperClient, (IpAddr, u32, u32, Handle)),
+            (PortMapperAsyncClient, (IpAddr, u32, u32, Handle)),
     ) -> GetPort {
         let program = Mapping::of_program(program_id, program_version);
         let parameters = (address, handle);
@@ -106,4 +106,5 @@ type GetPortStep = AndThen<ConnectToPortMapperStep, GetPort, GetPortFn>;
 type ConnectToPortMapperStep =
     Join<PortMapperConnect, FutureResult<(IpAddr, u32, u32, Handle), Error>>;
 
-type GetPortFn = fn((PortMapperClient, (IpAddr, u32, u32, Handle))) -> GetPort;
+type GetPortFn =
+    fn((PortMapperAsyncClient, (IpAddr, u32, u32, Handle))) -> GetPort;

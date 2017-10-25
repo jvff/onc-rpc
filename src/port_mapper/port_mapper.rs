@@ -7,7 +7,7 @@ onc_rpc! {
     program(port_mapper::PortMapper) {
         id = 100_000;
         version = 2;
-        client = PortMapperClient;
+        async_client = PortMapperAsyncClient;
         server = PortMapperServerWrapper;
 
         procedures {
@@ -22,4 +22,4 @@ onc_rpc! {
     }
 }
 
-pub type PortMapperConnect = Connect<port_mapper::Client>;
+pub type PortMapperConnect = Connect<port_mapper::AsyncClient>;

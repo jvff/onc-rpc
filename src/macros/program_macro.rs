@@ -95,7 +95,13 @@ macro_rules! onc_rpc_program {
                 $name,
                 $id,
                 $version,
-                { $( $procedure $parameters -> $result_future ),* }
+                {
+                    $(
+                        $procedure
+                        $parameters
+                        -> $result_future < $result_type >
+                    ),*
+                }
             }
 
             onc_rpc_program_server! {
