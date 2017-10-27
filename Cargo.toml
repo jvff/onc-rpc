@@ -11,7 +11,7 @@ futures = "0.1"
 serde = "1.0"
 serde_bytes = "0.10"
 serde_derive = "1.0"
-serde-xdr = "0.3"
+serde-xdr = "0.4"
 tokio-core = "0.1"
 tokio-io = "0.1"
 tokio-proto = { git = "https://github.com/jvff/tokio-proto.git", branch = "generic_error" }
