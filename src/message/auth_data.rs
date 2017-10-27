@@ -12,7 +12,7 @@ pub struct AuthData {
 impl Default for AuthData {
     fn default() -> Self {
         AuthData {
-            flavor: AuthFlavor::None,
+            flavor: AuthFlavor::Null,
             body: Vec::new(),
         }
     }

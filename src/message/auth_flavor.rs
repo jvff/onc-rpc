@@ -1,7 +1,7 @@
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum AuthFlavor {
-    None,
-    System,
+    Null,
+    Unix,
     Short,
-    DiffieHelman,
+    Des,
 }
