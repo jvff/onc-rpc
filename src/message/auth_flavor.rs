@@ -12,34 +12,14 @@ mod tests {
 
     use super::AuthFlavor;
 
-    fn serialize(auth_flavor: AuthFlavor, value: u32) {
+    fn serialize_test(auth_flavor: AuthFlavor, value: u32) {
         let serialized = serde_xdr::to_bytes(&auth_flavor).unwrap();
         let serialized_value: u32 = serde_xdr::from_bytes(&serialized).unwrap();
 
         assert_eq!(serialized_value, value);
     }
 
-    #[test]
-    fn serialize_null() {
-        serialize(AuthFlavor::Null, 0);
-    }
-
-    #[test]
-    fn serialize_unix() {
-        serialize(AuthFlavor::Unix, 1);
-    }
-
-    #[test]
-    fn serialize_short() {
-        serialize(AuthFlavor::Short, 2);
-    }
-
-    #[test]
-    fn serialize_des() {
-        serialize(AuthFlavor::Des, 3);
-    }
-
-    fn deserialize(value: u32, auth_flavor: AuthFlavor) {
+    fn deserialize_test(value: u32, auth_flavor: AuthFlavor) {
         let serialized = serde_xdr::to_bytes(&value).unwrap();
         let deserialized: AuthFlavor =
             serde_xdr::from_bytes(&serialized).unwrap();
@@ -47,23 +27,36 @@ mod tests {
         assert_eq!(deserialized, auth_flavor);
     }
 
-    #[test]
-    fn deserialize_null() {
-        deserialize(0, AuthFlavor::Null);
+    macro_rules! serialization_tests {
+        ( $( $name:ident: $value:expr => $variant:expr ),* $(,)* ) => {
+            mod serialize {
+                use super::*;
+
+                $(
+                    #[test]
+                    fn $name() {
+                        serialize_test($variant, $value);
+                    }
+                )*
+            }
+
+            mod deserialize {
+                use super::*;
+
+                $(
+                    #[test]
+                    fn $name() {
+                        deserialize_test($value, $variant);
+                    }
+                )*
+            }
+        };
     }
 
-    #[test]
-    fn deserialize_unix() {
-        deserialize(1, AuthFlavor::Unix);
-    }
-
-    #[test]
-    fn deserialize_short() {
-        deserialize(2, AuthFlavor::Short);
-    }
-
-    #[test]
-    fn deserialize_des() {
-        deserialize(3, AuthFlavor::Des);
+    serialization_tests! {
+        null: 0 => AuthFlavor::Null,
+        unix: 1 => AuthFlavor::Unix,
+        short: 2 => AuthFlavor::Short,
+        des: 3 => AuthFlavor::Des,
     }
 }
