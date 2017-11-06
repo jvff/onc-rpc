@@ -7,6 +7,7 @@ macro_rules! onc_rpc_program_server {
     ) => {
         pub mod server {
             use std::io;
+            use std::net::SocketAddr;
 
             use futures::{Async, Future, Poll};
             use tokio_service::{NewService, Service};
@@ -26,15 +27,23 @@ macro_rules! onc_rpc_program_server {
                 { $( $procedure $parameters -> $result_future ),* }
             }
 
-            pub type Server = RpcServer<ServiceConfig>;
+            pub struct Server {
+                server: RpcServer<ServiceConfig>,
+            }
 
             impl Server {
+                pub fn new(address: SocketAddr) -> Self {
+                    Server {
+                        server: RpcServer::new(address),
+                    }
+                }
+
                 pub fn serve<P>(&self, program: P)
                 where
                     P: 'static + Clone + $program + Send + Sync,
                     Error: From<P::Error>,
                 {
-                    self.serve_rpc_service(ServerService::from(program));
+                    self.server.serve_rpc_service(ServerService::from(program));
                 }
             }
         }
