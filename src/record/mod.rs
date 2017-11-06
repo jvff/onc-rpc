@@ -1,3 +1,4 @@
+mod bytes_mut_extending_writer;
 mod multiplex_record_transport;
 mod record;
 mod record_codec;
