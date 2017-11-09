@@ -112,10 +112,12 @@
 //! #
 //! #   use std::thread;
 //! #   use std::time::Duration;
-//!
+//! #
 //! use std::sync::{Arc, Mutex};
 //!
 //! use futures::future::{FutureResult, IntoFuture};
+//!
+//! use program_module::Server;
 //!
 //! #[derive(Clone)]
 //! pub struct SimpleMyProgram {
@@ -181,7 +183,7 @@
 //! #
 //! #   fn serve() {
 //!     let listen_address ="0.0.0.0:55005".parse().unwrap();
-//!     let server = program_module::Server::new(listen_address);
+//!     let server = Server::new(listen_address);
 //!     let program = SimpleMyProgram::new();
 //!
 //!     server.serve(program);
@@ -223,6 +225,8 @@
 //! #
 //! #   use futures::future::{FutureResult, IntoFuture};
 //! #
+//! use program_module::SyncClient;
+//!
 //! #   #[derive(Clone)]
 //! #   pub struct SimpleMyProgram {
 //! #       // Wrapping the value in an Arc<Mutex<>> makes it possible to share the
@@ -280,7 +284,7 @@
 //! #           }
 //! #       }
 //! #   }
-//!
+//! #
 //! fn main() {
 //! #       start_server();
 //! #
@@ -289,9 +293,8 @@
 //!     // Here we open a connection to the program when we know the remote port
 //!     // otherwise it will connect to the remote port mapper in order to
 //!     // discover the port to connect to.
-//!     let mut client = program_module::SyncClient::connect_to_known_port(
-//!         connect_address,
-//!     ).unwrap();
+//!     let mut client =
+//!         SyncClient::connect_to_known_port(connect_address).unwrap();
 //!
 //!     // The value should start uninitialized
 //!     assert_eq!(client.get().unwrap(), None);
