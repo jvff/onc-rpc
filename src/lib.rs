@@ -193,7 +193,10 @@
 //! ## Synchronous Client
 //!
 //! To connect to a remote program, we can use either a synchronous client or an
-//! asynchronous client. The simplest is the synchronous client, shown below:
+//! asynchronous client. The simplest is the synchronous client. Every call
+//! returns a `Result<T, onc_rpc::Error>`, because there can be errors while
+//! requesting the remote call, but the result actually returned by the server
+//! is `T`.
 //!
 //! ```
 //! #   extern crate serde;
