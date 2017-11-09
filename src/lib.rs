@@ -290,9 +290,9 @@
 //! #
 //!     let connect_address = "127.0.0.1:55005".parse().unwrap();
 //!
-//!     // Here we open a connection to the program when we know the remote port
-//!     // otherwise it will connect to the remote port mapper in order to
-//!     // discover the port to connect to.
+//!     // Here we open a connection to the program using a specified port.
+//!     // If we don't know the port we can call connect that will connect to
+//!     // the remote port mapper in order to discover the port to connect to
 //!     let mut client =
 //!         SyncClient::connect_to_known_port(connect_address).unwrap();
 //!
