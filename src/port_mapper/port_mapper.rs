@@ -7,9 +7,12 @@ onc_rpc! {
     program(port_mapper::PortMapper) {
         id = 100_000;
         version = 2;
-        async_client = PortMapperAsyncClient;
-        sync_client = PortMapperSyncClient;
-        server = PortMapperServerWrapper;
+
+        export {
+            AsyncClient as PortMapperAsyncClient;
+            SyncClient as PortMapperSyncClient;
+            Server as PortMapperServerWrapper;
+        }
 
         procedures {
             0 => null() -> NullResult<()>,

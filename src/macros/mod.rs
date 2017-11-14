@@ -1,5 +1,6 @@
 #[macro_use] mod async_client_macro;
 #[macro_use] mod client_macro;
+#[macro_use] mod export_macro;
 #[macro_use] mod parameters_macro;
 #[macro_use] mod procedure_macro;
 #[macro_use] mod procedure_message_macro;
