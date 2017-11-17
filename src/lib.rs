@@ -348,6 +348,7 @@ extern crate tokio_io;
 extern crate tokio_proto;
 extern crate tokio_service;
 
+#[allow(missing_docs)]
 mod errors;
 #[macro_use]
 mod macros;
