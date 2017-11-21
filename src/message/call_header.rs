@@ -1,6 +1,7 @@
 use super::auth_data::AuthData;
 use super::super::rpc::{RpcCall, RpcProcedure, RpcProgram};
 
+/// Message header for a remote procedure call.
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct CallHeader {
     rpc_version: u32,
@@ -36,6 +37,7 @@ where
 }
 
 impl CallHeader {
+    /// Get the ID of the procedure to call.
     pub fn procedure(&self) -> u32 {
         self.procedure
     }
