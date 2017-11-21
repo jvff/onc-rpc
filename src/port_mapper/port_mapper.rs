@@ -9,9 +9,9 @@ onc_rpc! {
         version = 2;
 
         export {
-            AsyncClient as PortMapperAsyncClient;
-            SyncClient as PortMapperSyncClient;
-            Server as PortMapperServerWrapper;
+            use AsyncClient as PortMapperAsyncClient;
+            use SyncClient as PortMapperSyncClient;
+            use Server as PortMapperServerWrapper;
         }
 
         procedures {
