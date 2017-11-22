@@ -29,6 +29,7 @@ macro_rules! onc_rpc_program_client {
             $program,
             $id,
             $version,
+            $exports,
             {
                 $( $procedure $parameters -> $result_type ),*
             }

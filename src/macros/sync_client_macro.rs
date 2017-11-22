@@ -1,9 +1,11 @@
 #[macro_export]
 macro_rules! onc_rpc_program_sync_client {
     (
+        @ready
         $program:ident,
         $id:expr,
         $version:expr,
+        $( #[$attr:meta] )* SyncClient,
         { $( $procedure:ident $parameters:tt -> $result_type:ty ),* $(,)* }
         $(,)*
     ) => {
@@ -14,6 +16,7 @@ macro_rules! onc_rpc_program_sync_client {
 
             use $crate::Result;
 
+            $( #[$attr] )*
             pub struct SyncClient {
                 reactor: Core,
                 async_client: AsyncClient,
@@ -52,6 +55,69 @@ macro_rules! onc_rpc_program_sync_client {
         }
 
         pub use self::sync_client::SyncClient;
+    };
+
+    (
+        $program:ident,
+        $id:expr,
+        $version:expr,
+        {},
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_sync_client! {
+            @ready
+            $program,
+            $id,
+            $version,
+            SyncClient,
+            $procedures,
+        }
+    };
+
+    (
+        $program:ident,
+        $id:expr,
+        $version:expr,
+        {
+            $( #[$sync_attr:meta] )* use SyncClient as $sync_client:ident;
+            $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
+        },
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_sync_client! {
+            @ready
+            $program,
+            $id,
+            $version,
+            $( #[$sync_attr] )* SyncClient,
+            $procedures,
+        }
+    };
+
+    (
+        $program:ident,
+        $id:expr,
+        $version:expr,
+        {
+            $( #[$ignored_attr:meta] )*
+            use $ignored_type:ident as $ignored_alias:ident;
+
+            $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
+        },
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_sync_client! {
+            $program,
+            $id,
+            $version,
+            {
+                $( $( #[$attr] )* use $type as $alias; )*
+            },
+            $procedures,
+        }
     };
 }
 
@@ -94,4 +160,3 @@ macro_rules! onc_rpc_program_sync_client_method {
         }
     };
 }
-
