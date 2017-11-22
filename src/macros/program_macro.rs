@@ -11,7 +11,8 @@ macro_rules! onc_rpc_program {
                     -> $result_future:ident < $result_type:ty >
             ),*
             $(,)*
-        }
+        },
+        $exports:tt,
         $(,)*
     ) => {
         pub mod $module {
@@ -95,6 +96,7 @@ macro_rules! onc_rpc_program {
                 $name,
                 $id,
                 $version,
+                $exports,
                 {
                     $(
                         $procedure

@@ -1,12 +1,15 @@
 #[macro_export]
 macro_rules! onc_rpc_program_async_client {
     (
+        @ready
         $program:ident,
         $id:expr,
         $version:expr,
+        $( #[$attr:meta] )* AsyncClient,
         { $( $procedure:ident $parameters:tt -> $result_future:ident ),* $(,)* }
         $(,)*
     ) => {
+        $( #[$attr] )*
         pub struct AsyncClient {
             pub rpc_service: RpcClientService<RecordService, ServiceConfig>,
         }
@@ -42,6 +45,69 @@ macro_rules! onc_rpc_program_async_client {
             )*
 
             $( onc_rpc_program_async_client_method!($procedure $parameters); )*
+        }
+    };
+
+    (
+        $program:ident,
+        $id:expr,
+        $version:expr,
+        {},
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_async_client! {
+            @ready
+            $program,
+            $id,
+            $version,
+            AsyncClient,
+            $procedures,
+        }
+    };
+
+    (
+        $program:ident,
+        $id:expr,
+        $version:expr,
+        {
+            $( #[$async_attr:meta] )* use AsyncClient as $async_client:ident;
+            $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
+        },
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_async_client! {
+            @ready
+            $program,
+            $id,
+            $version,
+            $( #[$async_attr] )* AsyncClient,
+            $procedures,
+        }
+    };
+
+    (
+        $program:ident,
+        $id:expr,
+        $version:expr,
+        {
+            $( #[$ignored_attr:meta] )*
+            use $ignored_type:ident as $ignored_alias:ident;
+
+            $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
+        },
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_async_client! {
+            $program,
+            $id,
+            $version,
+            {
+                $( $( #[$attr] )* use $type as $alias; )*
+            },
+            $procedures,
         }
     };
 }

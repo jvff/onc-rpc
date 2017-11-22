@@ -5,6 +5,6 @@ macro_rules! onc_rpc_program_export {
             $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
         }
     ) => {
-        $( $( #[$attr] )* pub use self::$module::$type as $alias; )*
+        $( pub use self::$module::$type as $alias; )*
     };
 }
