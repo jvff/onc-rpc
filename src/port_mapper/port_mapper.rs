@@ -206,4 +206,8 @@ onc_rpc! {
     }
 }
 
+/// Asynchronous connection attempt to a remote port mapper.
+///
+/// `PortMapperConnect` is a `Future` that resolves into an instance of
+/// [`PortMapperAsyncClient`](./struct.PortMapperAsyncClient.html).
 pub type PortMapperConnect = Connect<port_mapper::AsyncClient>;
