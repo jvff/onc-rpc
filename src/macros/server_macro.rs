@@ -1,7 +1,9 @@
 #[macro_export]
 macro_rules! onc_rpc_program_server {
     (
+        @ready
         $program:ident,
+        $( #[$attr:meta] )* Server,
         { $( $procedure:ident $parameters:tt -> $result_future:ident ),* $(,)* }
         $(,)*
     ) => {
@@ -31,6 +33,7 @@ macro_rules! onc_rpc_program_server {
                 server: RpcServer<ServiceConfig>,
             }
 
+            $( #[$attr] )*
             impl Server {
                 pub fn new(address: SocketAddr) -> Self {
                     Server {
@@ -49,5 +52,51 @@ macro_rules! onc_rpc_program_server {
         }
 
         pub use self::server::Server;
+    };
+
+    (
+        $program:ident,
+        {},
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_server!(@ready $program, Server, $procedures)
+    };
+
+    (
+        $program:ident,
+        {
+            $( #[$server_attr:meta] )* use Server as $server:ident;
+            $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
+        },
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_server! {
+            @ready
+            $program,
+            $( #[$server_attr] )* Server,
+            $procedures,
+        }
+    };
+
+    (
+        $program:ident,
+        {
+            $( #[$ignored_attr:meta] )*
+            use $ignored_type:ident as $ignored_alias:ident;
+
+            $( $( #[$attr:meta] )* use $type:ident as $alias:ident; )*
+        },
+        $procedures:tt
+        $(,)*
+    ) => {
+        onc_rpc_program_server! {
+            $program,
+            {
+                $( $( #[$attr] )* use $type as $alias; )*
+            },
+            $procedures,
+        }
     };
 }

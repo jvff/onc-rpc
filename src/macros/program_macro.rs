@@ -108,6 +108,7 @@ macro_rules! onc_rpc_program {
 
             onc_rpc_program_server! {
                 $name,
+                $exports,
                 { $( $procedure $parameters -> $result_future ),* }
             }
         }
