@@ -191,6 +191,55 @@ onc_rpc! {
             /// }
             use SyncClient as PortMapperSyncClient;
 
+            /// A port mapper server program wrapper.
+            ///
+            /// This is a server implementation that can serve implementations
+            /// of a port mapper program, represented as implementations of the
+            /// [`PortMapper`](trait.PortMapper.html) trait.
+            ///
+            /// # Example
+            ///
+            /// To use the server, create an instance of it with the address to
+            /// listen on and then call the [`serve`](#method.server) with the
+            /// instance of the port mapper program.
+            ///
+            /// ```
+            /// #   extern crate onc_rpc;
+            /// #
+            /// #   use std::thread;
+            /// #   use std::time::Duration;
+            /// #
+            /// #   use onc_rpc::port_mapper::HashMapPortMapper;
+            /// #   use onc_rpc::port_mapper::PortMapperSyncClient;
+            /// use onc_rpc::port_mapper::PortMapperServerWrapper;
+            ///
+            /// #   type MyPortMapperProgram = HashMapPortMapper;
+            /// #
+            /// #   fn main() {
+            /// #       start_server();
+            /// #
+            /// #       let address = "127.0.0.1:111".parse().unwrap();
+            /// #       let mut port_mapper =
+            /// #           PortMapperSyncClient::connect_to_known_port(address)
+            /// #               .unwrap();
+            /// #
+            /// #       assert_eq!(port_mapper.dump().unwrap().len(), 0);
+            /// #   }
+            /// #
+            /// #   fn start_server() {
+            /// #       thread::spawn(serve);
+            /// #       thread::sleep(Duration::from_millis(100));
+            /// #   }
+            /// #
+            /// #   fn serve() {
+            /// // Listen for connections comming from the local host
+            /// let address = "127.0.0.1:111".parse().unwrap();
+            /// let server = PortMapperServerWrapper::new(address);
+            /// let program = MyPortMapperProgram::new();
+            ///
+            /// server.serve(program);
+            /// #   }
+            /// ```
             use Server as PortMapperServerWrapper;
         }
 
