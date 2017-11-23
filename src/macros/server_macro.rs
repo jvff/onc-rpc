@@ -60,7 +60,7 @@ macro_rules! onc_rpc_program_server {
         $procedures:tt
         $(,)*
     ) => {
-        onc_rpc_program_server!(@ready $program, Server, $procedures)
+        onc_rpc_program_server!(@ready $program, Server, $procedures);
     };
 
     (
