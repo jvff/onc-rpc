@@ -34,3 +34,5 @@ pub use self::port_mapper::{GetPortResult, PortMapper, PortMapperAsyncClient,
                             PortMapperConnect, PortMapperServerWrapper,
                             PortMapperSyncClient};
 pub use self::port_mapper_server::PortMapperServer;
+
+pub use self::hash_map_port_mapper::HashMapPortMapper;
