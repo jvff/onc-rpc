@@ -35,12 +35,19 @@ macro_rules! onc_rpc_program_server {
 
             $( #[$attr] )*
             impl Server {
+                /// Create a new server to listen on a given address.
                 pub fn new(address: SocketAddr) -> Self {
                     Server {
                         server: RpcServer::new(address),
                     }
                 }
 
+                /// Start listening and accepting remote procedure calls.
+                ///
+                /// Calls are delegated to the specified program. For every
+                /// call, the program instance is cloned in order to process the
+                /// request asynchronously. Care must be taken to make sure the
+                /// program's internal state is shared when cloned.
                 pub fn serve<P>(&self, program: P)
                 where
                     P: 'static + Clone + $program + Send + Sync,
