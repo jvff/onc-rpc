@@ -5,6 +5,10 @@ use super::multiplex_record_transport::MultiplexRecordTransport;
 use super::record::Record;
 use super::super::errors::{Error, Result};
 
+/// A protocol that serializes its messages using the
+/// [Record Marking Standard][record].
+///
+/// [record]: https://tools.ietf.org/html/rfc1057#page-18
 pub struct RecordProtocol;
 
 impl<T> ClientProto<T> for RecordProtocol
