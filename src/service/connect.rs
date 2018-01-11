@@ -11,6 +11,11 @@ use tokio_proto::multiplex::{ClientService, Multiplex};
 use super::super::errors::{Error, ErrorKind, ResultExt};
 use super::super::record::RecordProtocol;
 
+/// An asynchronous connection attempt to a remote program.
+///
+/// The type parameter `T` is the asynchronous client interface to the remote
+/// program. Connection is performed through TCP, and communication is through
+/// the record protocol.
 pub struct Connect<T>
 where
     T: From<ClientService<TcpStream, RecordProtocol>>,
@@ -24,6 +29,9 @@ impl<T> Connect<T>
 where
     T: From<ClientService<TcpStream, RecordProtocol>>,
 {
+    /// Create a new connection attempt to the remote program at the given
+    /// `address` and using the given `handle` to the asynchronous event
+    /// reactor.
     pub fn new(address: SocketAddr, handle: &Handle) -> Self {
         let client = TcpClient::new(RecordProtocol);
 
