@@ -12,6 +12,14 @@ use super::super::port_mapper::{GetPortResult, Mapping, PortMapper,
                                 PortMapperAsyncClient, PortMapperConnect};
 use super::super::record::RecordProtocol;
 
+/// An asynchronous connection attempt (with port discovery) to a remote
+/// program.
+///
+/// The type parameter `T` is the asynchronous client interface to the remote
+/// program. An initial connection is made to the port mapper program running on
+/// the remote machine in order to obtain the port number of the desired
+/// program instance. Connection is then performed through TCP, and
+/// communication is through the record protocol.
 pub struct FindPortAndConnect<T>
 where
     T: From<ClientService<TcpStream, RecordProtocol>>,
@@ -27,6 +35,16 @@ impl<T> FindPortAndConnect<T>
 where
     T: From<ClientService<TcpStream, RecordProtocol>>,
 {
+    /// Create a new connection attempt with port discovery to the remote
+    /// program.
+    ///
+    /// An attempt will be made to connect to the port mapper program running on
+    /// the remote machine at the IP address specified in `address`. The port
+    /// for the program instance specified by `program_id` and `program_version`
+    /// will be requested and finally used for a connection attempt to the
+    /// program instance.
+    ///
+    /// Both connection attempts use the event reactor of the given `handle`.
     pub fn new(
         address: IpAddr,
         program_id: u32,
