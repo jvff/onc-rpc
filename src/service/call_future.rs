@@ -11,6 +11,12 @@ use super::try_from::TryFrom;
 use super::super::errors::Error;
 use super::super::record::Record;
 
+/// Asynchronous remote procedure call result.
+///
+/// This is a `Future` implementation that waits until a record message is
+/// received by the `R` type parameter and then attempts to construct the
+/// response type specified in the `P` type parameter by deserializing the
+/// message.
 pub struct CallFuture<R, P>
 where
     R: Future<Item = Record<Vec<u8>>>,
@@ -30,6 +36,10 @@ where
     R::Error: Into<Error>,
     Error: From<<P::Response as TryFrom<P::ProcedureMessage>>::Error>,
 {
+    /// Creates a new instance of the asynchronous result.
+    ///
+    /// When polled, it will wait for the `response_record` to produce the
+    /// response message and then use the `response_hint` to deserialize it.
     pub fn new(
         response_hint: <P::Request as RpcRequest>::ResponseHint,
         response_record: R,
