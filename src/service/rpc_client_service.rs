@@ -12,6 +12,11 @@ use super::try_from::TryFrom;
 use super::super::errors::{Error, Result};
 use super::super::record::Record;
 
+/// A client service to communicate with a remote program.
+///
+/// Given an RPC service configuration, it wraps around a record service in
+/// order to send remote procedure call requests and to return a future of the
+/// received results.
 pub struct RpcClientService<S, P>
 where
     S: Service<Request = Record<Vec<u8>>, Response = Record<Vec<u8>>>,
