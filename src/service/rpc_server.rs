@@ -11,6 +11,9 @@ use super::try_from::TryFrom;
 use super::super::errors::Error;
 use super::super::record::RecordProtocol;
 
+/// A TCP server for serving RPC services.
+///
+/// The services must be compatible with the given RPC service configuration.
 pub struct RpcServer<P>
 where
     P: RpcServiceConfig,
@@ -24,6 +27,7 @@ where
     P: RpcServiceConfig + Send + Sync + 'static,
     <P::Request as TryFrom<P::ProcedureMessage>>::Error: Into<Error>,
 {
+    /// Create a new server instance.
     pub fn new(address: SocketAddr) -> Self {
         RpcServer {
             server: TcpServer::new(RecordProtocol, address),
@@ -31,6 +35,7 @@ where
         }
     }
 
+    /// Synchronously serve a given service.
     pub fn serve_rpc_service<S>(&self, service: S)
     where
         S: 'static
