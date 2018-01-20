@@ -43,7 +43,6 @@ where
     P: RpcServiceConfig,
     S::Error: Into<Error>,
     Error: From<<P::Request as TryFrom<P::ProcedureMessage>>::Error>,
-    //<P::Request as TryFrom<P::ProcedureMessage>>::Error: Into<Error>,
 {
     fn try_call(
         &self,
