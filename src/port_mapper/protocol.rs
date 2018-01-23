@@ -4,9 +4,13 @@ use std::fmt::Formatter;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde::de::{Error, Visitor};
 
+/// Protocol to use for remote procedure calls.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub enum Protocol {
+    /// TCP/IP.
     Tcp,
+
+    /// UDP/IP.
     Udp,
 }
 
