@@ -29,11 +29,11 @@ macro_rules! onc_rpc_program_server {
                 { $( $procedure $parameters -> $result_future ),* }
             }
 
+            $( #[$attr] )*
             pub struct Server {
                 server: RpcServer<ServiceConfig>,
             }
 
-            $( #[$attr] )*
             impl Server {
                 /// Create a new server to listen on a given address.
                 pub fn new(address: SocketAddr) -> Self {
