@@ -42,12 +42,31 @@ impl<'a> From<(&'a MappingWithoutPort, &'a u32)> for Mapping {
     }
 }
 
+/// A simple port mapper program implementation using a shared hash map.
+///
+/// A hash map is used to map registered program instances to their port
+/// numbers. The hash map is stored in an `Arc<Mutex<_>>`, which allows it to
+/// be shared between different threads.
+///
+/// The behaviour of `Clone` for this implementation clones the shared reference
+/// to the internal hash map, which means that all clones of the program share
+/// the same hash map.
+///
+/// Even though the program instance can be used locally, it is generally
+/// served on the network using
+/// [`PortMapperServerWrapper`][port_mapper_server_wrapper]. See
+/// [`PortMapperServer`][port_mapper_server] for a example that uses a
+/// `HashMapPortMapper` internally.
+///
+/// [port_mapper_server_wrapper]: struct.PortMapperServerWrapper.html
+/// [port_mapper_server]: struct.PortMapperServer.html
 #[derive(Clone)]
 pub struct HashMapPortMapper {
     map: Arc<Mutex<HashMap<MappingWithoutPort, u32>>>,
 }
 
 impl HashMapPortMapper {
+    /// Create a new program instance with an empty hash map.
     pub fn new() -> Self {
         HashMapPortMapper {
             map: Arc::new(Mutex::new(HashMap::new())),
