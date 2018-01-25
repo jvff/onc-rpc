@@ -7,7 +7,8 @@ macro_rules! onc_rpc_program {
         $version:expr,
         {
             $(
-                $procedure_id:expr => $procedure:ident $parameters:tt
+                $( #[$attribute:meta] )*
+                fn ( $procedure_id:expr ) $procedure:ident $parameters:tt
                     -> $result_future:ident < $result_type:ty >
             ),*
             $(,)*
@@ -87,6 +88,7 @@ macro_rules! onc_rpc_program {
 
                 $(
                     onc_rpc_program_trait_method! {
+                        $( #[$attribute] )*
                         $procedure $parameters -> $result_future
                     }
                 )*
@@ -122,23 +124,31 @@ macro_rules! onc_rpc_program {
 
 #[macro_export]
 macro_rules! onc_rpc_program_trait_method {
-    ( $procedure:ident () -> $result_future:ident ) => {
+    (
+        $( #[$attribute:meta] )*
+        $procedure:ident () -> $result_future:ident
+    ) => {
+        $( #[$attribute] )*
         fn $procedure(&self) -> Self::$result_future;
     };
 
     (
+        $( #[$attribute:meta] )*
         $procedure:ident ( $parameter:ident : $type:ty $(,)* )
             -> $result_future:ident
     ) => {
+        $( #[$attribute] )*
         fn $procedure<P>(&self, $parameter: P) -> Self::$result_future
         where
             P: Into<$type>;
     };
 
     (
+        $( #[$attribute:meta] )*
         $procedure:ident ( $( $parameter:ident : $type:ty ),* $(,)* )
             -> $result_future:ident
     ) => {
+        $( #[$attribute] )*
         fn $procedure(&self, $( $parameter: $type, )*) -> Self::$result_future;
     };
 }

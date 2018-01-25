@@ -244,12 +244,25 @@ onc_rpc! {
         }
 
         procedures {
-            0 => null() -> NullResult<()>,
-            1 => set(program: Mapping) -> SetResult<bool>,
-            2 => unset(program: Mapping) -> UnsetResult<bool>,
-            3 => get_port(program: Mapping) -> GetPortResult<u32>,
-            4 => dump() -> DumpResult<Vec<Mapping>>,
-            5 => call_broadcast(arguments: CallArgs)
+            /// Does nothing.
+            fn(0) null() -> NullResult<()>,
+
+            /// Registers a mapping between a program instance and its port
+            /// number.
+            fn(1) set(program: Mapping) -> SetResult<bool>,
+
+            /// Removes a mapping between a program instance and its port
+            /// number.
+            fn(2) unset(program: Mapping) -> UnsetResult<bool>,
+
+            /// Retrieves the port number for a program instance.
+            fn(3) get_port(program: Mapping) -> GetPortResult<u32>,
+
+            /// List all registered program instances and their port numbers.
+            fn(4) dump() -> DumpResult<Vec<Mapping>>,
+
+            /// Call a method of a program instance indirectly.
+            fn(5) call_broadcast(arguments: CallArgs)
                 -> CallBroadcastResult<CallResult>,
         }
     }
