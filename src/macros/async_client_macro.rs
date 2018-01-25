@@ -11,7 +11,7 @@ macro_rules! onc_rpc_program_async_client {
     ) => {
         $( #[$attr] )*
         pub struct AsyncClient {
-            pub rpc_service: RpcClientService<RecordService, ServiceConfig>,
+            rpc_service: RpcClientService<RecordService, ServiceConfig>,
         }
 
         impl From<RecordService> for AsyncClient {
