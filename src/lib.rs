@@ -58,8 +58,8 @@
 //!         version = 1;
 //!
 //!         procedures {
-//!             10 => set(value: u32) -> SetResult<bool>,
-//!             20 => get() -> GetResult<Option<u32>>,
+//!             fn(10) set(value: u32) -> SetResult<bool>,
+//!             fn(20) get() -> GetResult<Option<u32>>,
 //!         }
 //!     }
 //! }
@@ -104,8 +104,8 @@
 //! #           version = 1;
 //! #
 //! #           procedures {
-//! #               10 => set(value: u32) -> SetResult<bool>,
-//! #               20 => get() -> GetResult<Option<u32>>,
+//! #               fn(10) set(value: u32) -> SetResult<bool>,
+//! #               fn(20) get() -> GetResult<Option<u32>>,
 //! #           }
 //! #       }
 //! #   }
@@ -215,8 +215,8 @@
 //! #           version = 1;
 //! #
 //! #           procedures {
-//! #               10 => set(value: u32) -> SetResult<bool>,
-//! #               20 => get() -> GetResult<Option<u32>>,
+//! #               fn(10) set(value: u32) -> SetResult<bool>,
+//! #               fn(20) get() -> GetResult<Option<u32>>,
 //! #           }
 //! #       }
 //! #   }
