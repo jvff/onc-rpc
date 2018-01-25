@@ -5,9 +5,10 @@ macro_rules! onc_rpc_program {
         $name:ident,
         $id:expr,
         $version:expr,
+        $( #[$trait_attribute:meta] )*
         {
             $(
-                $( #[$attribute:meta] )*
+                $( #[$procedure_attribute:meta] )*
                 fn ( $procedure_id:expr ) $procedure:ident $parameters:tt
                     -> $result_future:ident < $result_type:ty >
             ),*
@@ -78,6 +79,7 @@ macro_rules! onc_rpc_program {
                 type ProcedureMessage = ProcedureMessage;
             }
 
+            $( #[$trait_attribute] )*
             pub trait $name {
                 type Error;
 
@@ -88,7 +90,7 @@ macro_rules! onc_rpc_program {
 
                 $(
                     onc_rpc_program_trait_method! {
-                        $( #[$attribute] )*
+                        $( #[$procedure_attribute] )*
                         $procedure $parameters -> $result_future
                     }
                 )*

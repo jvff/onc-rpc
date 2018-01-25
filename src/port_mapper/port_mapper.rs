@@ -243,6 +243,7 @@ onc_rpc! {
             use Server as PortMapperServerWrapper;
         }
 
+        /// Remote procedures of the port mapper program.
         procedures {
             /// Does nothing.
             fn(0) null() -> NullResult<()>,

@@ -7,6 +7,7 @@ macro_rules! onc_rpc {
             id = $id:expr ;
             version = $version:expr ;
 
+            $( #[$trait_attribute:meta] )*
             procedures $procedures:tt
         }
 
@@ -17,6 +18,7 @@ macro_rules! onc_rpc {
 
                 $( export $rest_exports:tt )*
 
+                $( #[$rest_trait_attribute:meta] )*
                 procedures $rest_procedures:tt
             }
         )*
@@ -28,6 +30,7 @@ macro_rules! onc_rpc {
 
                 export {}
 
+                $( #[$trait_attribute] )*
                 procedures $procedures
             }
 
@@ -38,6 +41,7 @@ macro_rules! onc_rpc {
 
                     $( export $rest_exports )*
 
+                    $( #[$rest_trait_attribute] )*
                     procedures $rest_procedures
                 }
             )*
@@ -51,6 +55,7 @@ macro_rules! onc_rpc {
 
             export $exports:tt
 
+            $( #[$trait_attribute:meta] )*
             procedures $procedures:tt
         }
 
@@ -61,6 +66,7 @@ macro_rules! onc_rpc {
 
                 $( export $rest_exports:tt )*
 
+                $( #[$rest_trait_attribute:meta] )*
                 procedures $rest_procedures:tt
             }
         )*
@@ -70,6 +76,7 @@ macro_rules! onc_rpc {
             $name,
             $id,
             $version,
+            $( #[$trait_attribute] )*
             $procedures,
             $exports,
         }
@@ -86,6 +93,7 @@ macro_rules! onc_rpc {
 
                     $( export $rest_exports )*
 
+                    $( #[$rest_trait_attribute] )*
                     procedures $rest_procedures
                 }
             )*
