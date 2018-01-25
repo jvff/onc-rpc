@@ -23,12 +23,26 @@ macro_rules! onc_rpc_program_async_client {
         }
 
         impl AsyncClient {
+            /// Connect to a remote program.
+            ///
+            /// Connects to a remote program at the specified IP address and
+            /// using the port number returned by the port mapper program
+            /// running on the same address.
+            ///
+            /// Connects first to a port mapper running on the server of the
+            /// specified IP address and requests the port number of the program
+            /// instance. Then it connects to the IP address and port of that
+            /// program instance.
             pub fn connect(address: IpAddr, handle: &Handle)
                 -> FindPortAndConnect<Self>
             {
                 FindPortAndConnect::new(address, $id, $version, handle)
             }
 
+            /// Connect to a remote program on a known port.
+            ///
+            /// Connects directly to a program instance on the specified IP
+            /// address and port.
             pub fn connect_to_known_port(
                 address: SocketAddr,
                 handle: &Handle,
