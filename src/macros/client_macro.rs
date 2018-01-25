@@ -7,6 +7,7 @@ macro_rules! onc_rpc_program_client {
         $exports:tt,
         {
             $(
+                $( #[$attribute:meta] )*
                 $procedure:ident
                 $parameters:tt
                 -> $result_future:ident < $result_type:ty >
@@ -31,7 +32,9 @@ macro_rules! onc_rpc_program_client {
             $version,
             $exports,
             {
-                $( $procedure $parameters -> $result_type ),*
+                $(
+                    $( #[$attribute] )* $procedure $parameters -> $result_type
+                ),*
             }
         }
     };

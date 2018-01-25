@@ -81,9 +81,11 @@ macro_rules! onc_rpc_program {
 
             $( #[$trait_attribute] )*
             pub trait $name {
+                /// Error type for when remote procedure call execution fails.
                 type Error;
 
                 $(
+                    /// Future result of a remote procedure call.
                     type $result_future:
                         Future<Item = $result_type, Error = Self::Error>;
                 )*
@@ -103,6 +105,7 @@ macro_rules! onc_rpc_program {
                 $exports,
                 {
                     $(
+                        $( #[$procedure_attribute] )*
                         $procedure
                         $parameters
                         -> $result_future < $result_type >

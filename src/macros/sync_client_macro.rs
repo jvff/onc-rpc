@@ -6,7 +6,10 @@ macro_rules! onc_rpc_program_sync_client {
         $id:expr,
         $version:expr,
         $( #[$attr:meta] )* SyncClient,
-        { $( $procedure:ident $parameters:tt -> $result_type:ty ),* $(,)* }
+        {
+            $( $( #[$procedure_attribute:meta] )*
+            $procedure:ident $parameters:tt -> $result_type:ty ),* $(,)*
+        }
         $(,)*
     ) => {
         mod sync_client {
@@ -48,6 +51,7 @@ macro_rules! onc_rpc_program_sync_client {
 
                 $(
                     onc_rpc_program_sync_client_method! {
+                        $( #[$procedure_attribute] )*
                         $procedure $parameters -> $result_type
                     }
                 )*
@@ -123,7 +127,8 @@ macro_rules! onc_rpc_program_sync_client {
 
 #[macro_export]
 macro_rules! onc_rpc_program_sync_client_method {
-    ( $procedure:ident () -> $result_type:ty ) => {
+    ( $( #[$attribute:meta] )* $procedure:ident () -> $result_type:ty ) => {
+        $( #[$attribute] )*
         pub fn $procedure(&mut self) -> Result<$result_type> {
             let operation = self.async_client.$procedure();
 
@@ -132,10 +137,12 @@ macro_rules! onc_rpc_program_sync_client_method {
     };
 
     (
+        $( #[$attribute:meta] )*
         $procedure:ident
         ( $parameter:ident : $type:ty $(,)* )
         -> $result_type:ty
     ) => {
+        $( #[$attribute] )*
         pub fn $procedure<P>(&mut self, $parameter: P) -> Result<$result_type>
         where
             P: Into<$type>,
@@ -147,10 +154,12 @@ macro_rules! onc_rpc_program_sync_client_method {
     };
 
     (
+        $( #[$attribute:meta] )*
         $procedure:ident
         ( $( $parameter:ident : $type:ty ),* $(,)* )
         -> $result_type:ty
     ) => {
+        $( #[$attribute] )*
         pub fn $procedure(
             &mut self, $( $parameter: $type, )*
         ) -> Result<$result_type> {
