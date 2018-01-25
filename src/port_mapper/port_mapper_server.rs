@@ -10,12 +10,15 @@ use super::port_mapper::PortMapperServerWrapper;
 /// # Example
 ///
 /// ```
+/// use onc_rpc::port_mapper::PortMapperServer;
+/// # use std::thread;
+///
 /// let address = "0.0.0.0:111".parse().unwrap();
 /// let server = PortMapperServer::new(address);
 ///
 /// # thread::spawn(move || {
 /// server.serve();
-/// # }
+/// # });
 /// ```
 pub struct PortMapperServer {
     server: PortMapperServerWrapper,
