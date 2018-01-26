@@ -4,6 +4,11 @@ macro_rules! onc_rpc_program_procedure_response_result {
         @processed $procedure:ident -> $result:ty
             $( = $parameter:tt )* => $return:tt
     ) => {
+        /// Future result of a remote procedure call.
+        ///
+        /// This `Future` implementation represents an asynchronous remote
+        /// procedure call. When it resolves, the call has either failed or
+        /// completed successfully and returned a value.
         pub struct ResponseResult {
             response: CallResponse,
         }
