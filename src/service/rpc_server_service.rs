@@ -13,6 +13,11 @@ use super::try_from::TryFrom;
 use super::super::errors::{Error, Result};
 use super::super::record::Record;
 
+/// A service that transforms low-level messages into high-level RPC requests
+/// and responses for a remote program service.
+///
+/// Wraps an RPC service and takes care of deserializing its incoming requests
+/// and serializing its outgoing responses.
 pub struct RpcServerService<S, P>
 where
     S: Service<Request = P::Request, Response = P::Response>,
