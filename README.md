@@ -36,8 +36,8 @@ To use this crate for remote procedure calls, define the interface using the
             version = 1;
 
             procedures {
-                10 => set(value: u32) -> SetResult<bool>,
-                20 => get() -> GetResult<Option<u32>>,
+                fn(10) set(value: u32) -> SetResult<bool>,
+                fn(20) get() -> GetResult<Option<u32>>,
             }
         }
     }
