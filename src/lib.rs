@@ -329,7 +329,7 @@
 //! #   }
 //! ```
 
-#![warn(missing_docs)]
+#![deny(missing_docs)]
 #![recursion_limit="128"]
 
 extern crate byteorder;
